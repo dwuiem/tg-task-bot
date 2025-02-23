@@ -2,10 +2,10 @@ bot:
   username: "hselabwork_task_bot"
   token: "7818375063:AAEcI-5gqsLsSnkJsINvKpXvc2T6lSp0Dt4"
 server:
-  port: 8084
+  port: 8080
 spring:
   rabbitmq:
     host: localhost
     port: 5672
-    username: user
+    username: app
     password: password

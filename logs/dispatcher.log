@@ -5,3 +5,9 @@
 2025-02-20 20:55:21 DEBUG UpdateProducerImpl:15 - ау
 2025-02-20 21:52:48 DEBUG UpdateProducerImpl:18 - Hello
 2025-02-20 21:52:48 DEBUG UpdateProducerImpl:19 - Привет
+2025-02-23 18:10:46 DEBUG UpdateProducerImpl:18 - Hello
+2025-02-23 18:10:46 DEBUG UpdateProducerImpl:19 - Привет
+2025-02-23 18:13:01 DEBUG UpdateProducerImpl:18 - Hello
+2025-02-23 18:13:01 DEBUG UpdateProducerImpl:19 - Прив
+2025-02-23 18:30:23 DEBUG UpdateProducerImpl:18 - Hello
+2025-02-23 18:30:23 DEBUG UpdateProducerImpl:19 - Привет как дела?
