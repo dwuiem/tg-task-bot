@@ -11,3 +11,11 @@
 2025-02-23 18:13:01 DEBUG UpdateProducerImpl:19 - Прив
 2025-02-23 18:30:23 DEBUG UpdateProducerImpl:18 - Hello
 2025-02-23 18:30:23 DEBUG UpdateProducerImpl:19 - Привет как дела?
+2025-02-23 19:55:13 DEBUG UpdateProducerImpl:18 - Hello
+2025-02-23 19:55:13 DEBUG UpdateProducerImpl:19 - Здарова, проверка
+2025-02-23 20:01:29 DEBUG UpdateProducerImpl:18 - Hello
+2025-02-23 20:01:29 DEBUG UpdateProducerImpl:19 - Здарова проверка
+2025-02-24 12:13:14 DEBUG UpdateProducerImpl:18 - Hello
+2025-02-24 12:13:14 DEBUG UpdateProducerImpl:19 - пРИВЕТ
+2025-02-24 20:06:04 DEBUG UpdateProducerImpl:18 - Hello
+2025-02-24 20:06:04 DEBUG UpdateProducerImpl:19 - Привет

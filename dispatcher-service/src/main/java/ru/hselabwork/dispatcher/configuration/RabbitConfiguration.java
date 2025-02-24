@@ -18,4 +18,9 @@ public class RabbitConfiguration {
     public Queue textMessageQueue() {
         return new Queue("text_message_update");
     }
+
+    @Bean
+    public Queue answerMessageQueue() {
+        return new Queue("answer_message");
+    }
 }
