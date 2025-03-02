@@ -6,3 +6,6 @@ spring:
     port: 5672
     username: app
     password: password
+  data:
+    mongodb:
+      uri: mongodb://app:123@localhost:27017/tgbot_db?authSource=admin
