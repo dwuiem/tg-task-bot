@@ -8,4 +8,4 @@ spring:
     password: password
   data:
     mongodb:
-      uri: mongodb://app:123@localhost:27017/tgbot_db?authSource=admin
+      uri: mongodb://app:password@localhost:27017/tgbot_db?authSource=admin
