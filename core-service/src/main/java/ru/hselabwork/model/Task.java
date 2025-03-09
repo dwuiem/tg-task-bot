@@ -6,19 +6,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "users")
+import java.time.LocalDateTime;
+
+@Document(collection = "tasks")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class Task {
     @Id
     private ObjectId id;
 
-    @Indexed(unique = true)
-    private Long chatId;
-    private UserState userState = UserState.NONE_STATE;
+    private ObjectId userId;
+    private String description;
+    private LocalDateTime deadline;
+    private LocalDateTime created = LocalDateTime.now();
+    private boolean completed;
 }

@@ -3,11 +3,11 @@ package ru.hselabwork.repository;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import ru.hselabwork.model.User;
+import ru.hselabwork.model.Task;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
-public interface UserRepository extends MongoRepository<User, ObjectId> {
-    Optional<User> findByChatId(Long chatId);
+public interface TaskRepository extends MongoRepository<Task, ObjectId> {
+    List<Task> findAllByUserId(ObjectId userId);
 }

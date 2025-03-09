@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.hselabwork.dispatcher.service.UpdateProducer;
 import ru.hselabwork.dispatcher.utils.MessageUtils;
@@ -26,21 +27,22 @@ public class UpdateController {
             log.error("Update is null");
             return;
         }
-
-        if (update.getMessage() != null) {
-            distributeMessageByType(update);
-        } else {
-            log.error("Received message is null");
-        }
+        distributeMessageByType(update);
     }
 
     private void distributeMessageByType(Update update) {
         var message = update.getMessage();
-        if (message.hasText()) {
+        if (update.hasCallbackQuery()) {
+            processCallBackQuery(update);
+        } else if (message.hasText()) {
             processTextMessage(update);
         } else {
             setUnsupportedMessageTypeView(update);
         }
+    }
+
+    private void processCallBackQuery(Update update) {
+        updateProducer.produce("callback_query_update", update);
     }
 
     private void setUnsupportedMessageTypeView(Update update) {
@@ -50,6 +52,10 @@ public class UpdateController {
 
     public void setView(SendMessage sendMessage) {
         telegramBot.sendAnswerMessage(sendMessage);
+    }
+
+    public void setView(DeleteMessage deleteMessage) {
+        telegramBot.deleteMessage(deleteMessage);
     }
 
     private void processTextMessage(Update update) {

@@ -23,4 +23,14 @@ public class RabbitConfiguration {
     public Queue answerMessageQueue() {
         return new Queue("answer_message");
     }
+
+    @Bean
+    public Queue deleteMessageQueue() {
+        return new Queue("delete_message");
+    }
+
+    @Bean
+    public Queue callbackQueryQueue() {
+        return new Queue("callback_query_update");
+    }
 }
