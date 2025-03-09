@@ -1,6 +1,6 @@
 bot:
   username: "hselabwork_task_bot"
-  token: "7818375063:AAEcI-5gqsLsSnkJsINvKpXvc2T6lSp0Dt4"
+  token: ${TELEGRAM_BOT_TOKEN}
 server:
   port: 8080
 spring:
