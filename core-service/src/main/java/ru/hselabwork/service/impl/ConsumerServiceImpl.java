@@ -33,9 +33,6 @@ public class ConsumerServiceImpl implements ConsumerService {
     @RabbitListener(queues = "callback_query_update")
     public void consumeCallbackQueryUpdate(Update update) {
         log.debug("Callback query message is received");
-
-        SendMessage sendMessage = callbackHandler.handle(update.getCallbackQuery());
-
-        producerService.produceAnswer(sendMessage);
+        callbackHandler.handle(update.getCallbackQuery());
     }
 }

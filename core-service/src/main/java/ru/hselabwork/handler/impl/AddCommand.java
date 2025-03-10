@@ -16,10 +16,10 @@ public class AddCommand implements CommandProcessor {
 
     private static final String responseText =
             """
-            *Опишите задачу в следующем формате*:
+            <b>Опишите задачу в следующем формате</b>:
             
-            _<0писание>_
-            _<Дата> <Время>_
+            <i>[0писание задачи]</i>
+            <i>[Дата 01.01.1111] [Время 11:11]</i>
             """;
 
     @Override
@@ -29,7 +29,7 @@ public class AddCommand implements CommandProcessor {
         return SendMessage.builder()
                 .chatId(chatId)
                 .text(responseText)
-                .parseMode("Markdown")
+                .parseMode("HTML")
                 .build();
     }
 }

@@ -490,3 +490,65 @@
 2025-03-10 12:59:09 DEBUG AnswerConsumerImpl:22 - Answer is received
 2025-03-10 12:59:14 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
 2025-03-10 12:59:14 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 13:28:16 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 13:28:17 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 13:28:20 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 13:28:20 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 13:28:20 ERROR TelegramBot:41 - Error executing org.telegram.telegrambots.meta.api.methods.send.SendMessage query: [400] Bad Request: can't parse entities: Can't find end tag corresponding to start tag "i"
+2025-03-10 13:30:18 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 13:30:18 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 13:30:24 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 13:30:24 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 13:30:24 DEBUG AnswerConsumerImpl:28 - Delete message is received
+2025-03-10 13:30:24 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 13:30:28 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 13:30:28 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 13:30:29 ERROR TelegramBot:41 - Error executing org.telegram.telegrambots.meta.api.methods.send.SendMessage query: [400] Bad Request: can't parse entities: Can't find end tag corresponding to start tag "s"
+2025-03-10 13:31:02 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 13:31:02 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:03:01 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 16:03:02 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:03:02 ERROR TelegramBot:41 - Error executing org.telegram.telegrambots.meta.api.methods.send.SendMessage query: [400] Bad Request: can't parse entities: Unmatched end tag at byte offset 237, expected "</u>", found "</s>"
+2025-03-10 16:04:31 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 16:04:32 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:05:48 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 16:05:48 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:05:50 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 16:05:50 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:06:02 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 16:06:02 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:06:02 DEBUG AnswerConsumerImpl:28 - Delete message is received
+2025-03-10 16:06:07 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 16:06:07 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:06:11 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 16:06:11 DEBUG AnswerConsumerImpl:28 - Delete message is received
+2025-03-10 16:06:11 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:06:22 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 16:06:22 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:06:24 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 16:06:24 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:06:33 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 16:06:33 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:06:35 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 16:06:35 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:06:35 DEBUG AnswerConsumerImpl:28 - Delete message is received
+2025-03-10 16:06:38 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 16:06:39 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:06:44 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 16:06:44 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:06:50 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 16:06:50 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:06:50 ERROR TelegramBot:41 - Error executing org.telegram.telegrambots.meta.api.methods.send.SendMessage query: [400] Bad Request: can't parse entities: Unsupported start tag "0писание" at byte offset 77
+2025-03-10 16:07:59 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 16:08:00 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:08:08 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 16:08:08 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:08:10 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 16:08:10 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:08:21 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 16:08:21 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:08:22 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 16:08:22 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 16:08:22 DEBUG AnswerConsumerImpl:28 - Delete message is received
+2025-03-10 16:08:24 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 16:08:24 DEBUG AnswerConsumerImpl:22 - Answer is received

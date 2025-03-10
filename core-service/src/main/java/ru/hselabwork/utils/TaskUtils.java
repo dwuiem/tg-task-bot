@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,31 +42,22 @@ public class TaskUtils {
         return null;
     }
 
-    public static String getTaskInfo(Task task) {
-        return task.getDescription() + (task.getDeadline() != null ? ("\n⏳ " + task.getDeadline().format(DATE_TIME_FORMATTER)) : "");
+    public static String parseDateTime(LocalDateTime dateTime) {
+        return dateTime.format(DATE_TIME_FORMATTER);
     }
 
     public static String getFullTaskInfo(Task task) {
-        return "\uD83D\uDCCC *Задача*\n\n" +
-                "\uD83D\uDD39 _Описание_: " + task.getDescription() + "\n\n" +
-                "_Статус:_ " + (task.isCompleted() ? "✅" : "\uD83D\uDD34") + "\n\n" +
-                (task.getDeadline() != null ? ("⏳ " + task.getDeadline().format(DATE_TIME_FORMATTER)) + "\n" : "") +
-                "Создан: " + task.getCreated().format(DATE_TIME_FORMATTER);
-    }
+        StringBuilder sb = new StringBuilder();
 
-    public static String getTaskListInfo(List<Task> tasks) {
-        StringBuilder sb = new StringBuilder("\uD83D\uDD39 Ваш список задач:\n\n");
-        for (int i = 0; i < tasks.size(); i++) {
-            Task task = tasks.get(i);
-            if (task.isCompleted()) {
-                sb.append("~~");
-            }
-            sb.append(i + 1).append(". ").append(getTaskInfo(task));
-            if (task.isCompleted()) {
-                sb.append("~~");
-            }
-            sb.append("\n\n");
+        sb.append("\uD83D\uDCCC <b>Задача</b>\n\n");
+        sb.append(String.format("\uD83D\uDD39 <i>Описание:</i> %s\n\n", task.getDescription()));
+        sb.append(String.format("<i>Статус:</i> %s\n\n", (task.isCompleted() ? "✅" : "\uD83D\uDD34")));
+        if (task.getDeadline() != null) {
+            sb.append(String.format("⏳ %s\n", task.getDeadline().format(DATE_TIME_FORMATTER)));
         }
+        sb.append(String.format("Создан: %s", task.getCreated().format(DATE_TIME_FORMATTER)));
+
         return sb.toString();
     }
+
 }

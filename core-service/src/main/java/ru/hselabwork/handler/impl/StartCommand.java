@@ -21,7 +21,6 @@ public class StartCommand implements CommandProcessor {
         return SendMessage.builder()
                 .chatId(chatId)
                 .text(welcomeMessage)
-                .parseMode("Markdown")
                 .build();
     }
 }
