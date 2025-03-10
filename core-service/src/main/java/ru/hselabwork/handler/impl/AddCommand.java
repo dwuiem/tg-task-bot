@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.hselabwork.handler.CommandProcessor;
 import ru.hselabwork.model.UserState;
+import ru.hselabwork.service.ProducerService;
 import ru.hselabwork.service.UserService;
 
 @Component
@@ -22,14 +23,20 @@ public class AddCommand implements CommandProcessor {
             <i>[Дата 01.01.1111] [Время 11:11]</i>
             """;
 
+    private final ProducerService producerService;
+
     @Override
-    public SendMessage process(Long chatId) {
+    public void process(Update update) {
+        Long chatId = update.getMessage().getChatId();
+
         userService.changeState(chatId, UserState.WAITING_FOR_TASK);
 
-        return SendMessage.builder()
-                .chatId(chatId)
-                .text(responseText)
-                .parseMode("HTML")
-                .build();
+        producerService.produceAnswer(
+                SendMessage.builder()
+                        .chatId(chatId)
+                        .text(responseText)
+                        .parseMode("HTML")
+                        .build()
+        );
     }
 }

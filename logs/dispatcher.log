@@ -552,3 +552,49 @@
 2025-03-10 16:08:22 DEBUG AnswerConsumerImpl:28 - Delete message is received
 2025-03-10 16:08:24 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
 2025-03-10 16:08:24 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 17:53:38 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 17:53:38 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 17:53:41 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 17:53:41 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 17:53:54 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 17:53:54 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 17:53:59 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 17:53:59 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 17:54:16 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 17:54:16 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 17:54:18 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 17:54:18 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 17:54:24 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 17:54:24 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 18:45:36 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 18:45:36 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 18:45:50 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 18:46:02 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 18:46:02 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 18:46:11 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 18:46:11 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 18:46:11 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 18:46:18 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 18:46:18 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 18:46:41 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 18:46:41 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 18:46:46 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 18:46:46 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 18:46:57 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 18:46:57 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 18:46:58 DEBUG UpdateProducerImpl:18 - Sent message to: callback_query_update
+2025-03-10 18:46:58 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 18:47:04 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 18:47:04 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 18:47:09 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 18:47:09 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 18:47:09 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 18:48:25 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 18:48:26 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 18:48:28 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 18:48:28 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 18:48:35 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 18:48:35 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 18:48:44 DEBUG UpdateProducerImpl:18 - Sent message to: text_message_update
+2025-03-10 18:48:44 DEBUG AnswerConsumerImpl:22 - Answer is received
+2025-03-10 18:48:44 DEBUG AnswerConsumerImpl:22 - Answer is received

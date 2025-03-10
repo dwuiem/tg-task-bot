@@ -5,19 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import ru.hselabwork.handler.impl.CompleteTaskCallback;
 import ru.hselabwork.handler.impl.DeleteTaskCallback;
-import ru.hselabwork.handler.impl.ListCommand;
 import ru.hselabwork.handler.impl.ViewTaskCallback;
-import ru.hselabwork.model.Task;
 import ru.hselabwork.service.ProducerService;
-import ru.hselabwork.service.TaskService;
 import ru.hselabwork.utils.CallbackDataUtils;
-import ru.hselabwork.utils.TaskUtils;
+
 
 import java.util.*;
 
@@ -29,6 +23,7 @@ public class CallbackHandler {
     private final DeleteTaskCallback deleteTaskCallback;
 
     private final Map<String, CallBackProcessor> callbacks;
+    private final ProducerService producerService;
 
     @PostConstruct
     public void init() {
@@ -43,7 +38,14 @@ public class CallbackHandler {
 
         AbstractMap.SimpleEntry<String, ObjectId> data = CallbackDataUtils.parseCallbackData(callbackData);
         String action = data.getKey();
-
-        callbacks.get(action).process(callbackQuery);
+        if (!callbacks.containsKey(action)) {
+            // TODO
+            producerService.produceAnswer(SendMessage.builder()
+                    .chatId(callbackQuery.getFrom().getId())
+                    .text("Я ещё не умею это обрабатывать")
+                    .build());
+        } else {
+            callbacks.get(action).process(callbackQuery);
+        }
     }
 }

@@ -2,6 +2,7 @@ package ru.hselabwork.handler;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -11,6 +12,7 @@ import ru.hselabwork.handler.impl.StartCommand;
 import ru.hselabwork.model.Task;
 import ru.hselabwork.model.User;
 import ru.hselabwork.model.UserState;
+import ru.hselabwork.service.ProducerService;
 import ru.hselabwork.service.TaskService;
 import ru.hselabwork.service.UserService;
 import ru.hselabwork.utils.TaskUtils;
@@ -20,6 +22,7 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
+@Log4j
 public class MessageHandler {
     private final UserService userService;
     private final TaskService taskService;
@@ -32,6 +35,7 @@ public class MessageHandler {
 
     private static final String commandNotFound = "Такой команды не существует";
     private static final String noResponseMessage = "Нет такого варианта ответа";
+    private final ProducerService producerService;
 
     @PostConstruct
     public void init() {
@@ -40,58 +44,70 @@ public class MessageHandler {
         commands.put("/add", addCommand);
     }
 
-    public SendMessage handle(Update update) {
+    public void handle(Update update) {
         String text = update.getMessage().getText();
         if (text.startsWith("/")) {
-            return handleCommand(update);
+            handleCommand(update);
         } else {
-            return handleText(update);
+            handleText(update);
         }
     }
 
-    private SendMessage handleCommand(Update update) {
+    private void handleCommand(Update update) {
         String command = update.getMessage().getText();
-        return commands.getOrDefault(command, (id) -> SendMessage.builder()
-                        .chatId(id)
-                        .text(commandNotFound)
-                        .build())
-                .process(update.getMessage().getChatId());
+        commands.getOrDefault(command, (upd) -> SendMessage.builder()
+                    .chatId(update.getMessage().getChatId())
+                    .text(commandNotFound)
+                    .build())
+            .process(update);
     }
 
-    private SendMessage handleText(Update update) {
+    private void handleText(Update update) {
         Long chatId = update.getMessage().getChatId();
         User user = userService.findOrCreate(chatId);
+        log.debug(user.getUserState().toString());
         switch (user.getUserState()) {
             case WAITING_FOR_TASK:
                 String text = update.getMessage().getText();
                 try {
                     Task task = TaskUtils.parseTaskFromMessage(text);
                     if (task == null) {
-                        return SendMessage.builder()
-                                .chatId(update.getMessage().getChatId())
-                                .text("❗ Неверный формат задачи. Попробуйте заново")
-                                .build();
+                        producerService.produceAnswer(
+                                SendMessage.builder()
+                                        .chatId(update.getMessage().getChatId())
+                                        .text("❗ Неверный формат задачи. Попробуйте заново")
+                                        .build()
+                        );
+                    } else {
+                        task.setUserId(user.getId());
+
+                        taskService.createTask(task);
+                        userService.changeState(chatId, UserState.NONE_STATE);
+
+                        producerService.produceAnswer(
+                                SendMessage.builder()
+                                        .chatId(update.getMessage().getChatId())
+                                        .text("✅ Задача успешно создана")
+                                        .build()
+                        );
                     }
-                    task.setUserId(user.getId());
-
-                    taskService.createTask(task);
-                    userService.changeState(chatId, UserState.NONE_STATE);
-
-                    return SendMessage.builder()
-                            .chatId(update.getMessage().getChatId())
-                            .text("✅ Задача успешно создана")
-                            .build();
                 } catch (DateTimeParseException e) {
-                    return SendMessage.builder()
-                            .chatId(update.getMessage().getChatId())
-                            .text("❗ Неверный формат даты / времени")
-                            .build();
+                    producerService.produceAnswer(
+                            SendMessage.builder()
+                                .chatId(update.getMessage().getChatId())
+                                .text("❗ Неверный формат даты / времени")
+                                .build()
+                    );
                 }
+                break;
             default:
-                return SendMessage.builder()
+                producerService.produceAnswer(
+                    SendMessage.builder()
                         .chatId(update.getMessage().getChatId())
                         .text(noResponseMessage)
-                        .build();
+                        .build()
+                );
+                break;
         }
     }
 }

@@ -3,15 +3,15 @@ package ru.hselabwork.handler.impl;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.hselabwork.handler.CallBackProcessor;
 import ru.hselabwork.model.Task;
+import ru.hselabwork.model.User;
+import ru.hselabwork.model.UserState;
 import ru.hselabwork.service.ProducerService;
 import ru.hselabwork.service.TaskService;
-import ru.hselabwork.service.impl.ProducerServiceImpl;
+import ru.hselabwork.service.UserService;
 import ru.hselabwork.utils.CallbackDataUtils;
 import ru.hselabwork.utils.MessageUtils;
 
@@ -20,10 +20,11 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class CompleteTaskCallback implements CallBackProcessor {
+public class EditDescriptionCallback implements CallBackProcessor {
 
     private final TaskService taskService;
     private final ProducerService producerService;
+    private final UserService userService;
 
     @Override
     public void process(CallbackQuery callbackQuery) {
@@ -35,18 +36,19 @@ public class CompleteTaskCallback implements CallBackProcessor {
         if (optionalTask.isEmpty()) {
             producerService.produceAnswer(MessageUtils.generateTaskNotFoundMessage(chatId));
         } else {
-            Task task = optionalTask.get();
-            Task updatedTask = taskService.changeCompleted(task, !task.isCompleted());
+
+            // TODO: Create new state
+            User user = userService.changeState(chatId, UserState.NONE_STATE);
 
             Integer messageId = callbackQuery.getMessage().getMessageId();
-            producerService.produceDelete(DeleteMessage.builder()
-                    .chatId(chatId)
-                    .messageId(messageId)
-                    .build()
+            producerService.produceDelete(
+                    DeleteMessage.builder()
+                            .chatId(chatId)
+                            .messageId(messageId)
+                            .build()
             );
 
-            producerService.produceAnswer(MessageUtils.generateTaskUpdatedMessage(chatId));
-            producerService.produceAnswer(MessageUtils.generateTaskInfoMessage(updatedTask, chatId));
+            producerService.produceAnswer(MessageUtils.generateEnterDescriptionMessage(chatId));
         }
     }
 }

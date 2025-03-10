@@ -11,9 +11,24 @@ import java.util.List;
 public class MessageUtils {
 
     private static final String noTasksResponse = "На текущий момент у вас <b>нет</b> никаких задач";
-    private static final String taskDeletedResponse = "✅ Задача успешно <u>удалена</u>";
     private static final String noTaskFoundResponse = "❗Задача <u>не найдена</u>. Возможно она была удалена";
+    private static final String taskDeletedResponse = "✅ Задача успешно <u>удалена</u>";
     private static final String taskUpdated = "✅ Задача <u>обновлена</u>";
+
+    private static final String enterDescriptionMessage = "<b>Напиши новое описание к задаче</b>";
+
+    public static SendMessage generateEnterDescriptionMessage(Long chatId) {
+        InlineKeyboardButton cancelButton = new InlineKeyboardButton("Отменить");
+        cancelButton.setCallbackData("cancel");
+        InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup(List.of(List.of(cancelButton)));
+
+        return SendMessage.builder()
+                .chatId(chatId)
+                .text(enterDescriptionMessage)
+                .parseMode("HTML")
+                .replyMarkup(keyboardMarkup)
+                .build();
+    }
 
     public static SendMessage generateTaskUpdatedMessage(Long chatId) {
         return SendMessage.builder()
