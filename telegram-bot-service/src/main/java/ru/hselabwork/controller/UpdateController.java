@@ -1,4 +1,4 @@
-package ru.hselabwork.dispatcher.controller;
+package ru.hselabwork.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.hselabwork.dispatcher.service.UpdateProducer;
-import ru.hselabwork.dispatcher.utils.MessageUtils;
+import ru.hselabwork.service.UpdateProducer;
+import ru.hselabwork.utils.MessageUtils;
 
 @Component
 @Log4j2

@@ -1,4 +1,4 @@
-package ru.hselabwork.dispatcher.configuration;
+package ru.hselabwork.configuration;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;

@@ -1,4 +1,4 @@
-package ru.hselabwork.dispatcher.controller;
+package ru.hselabwork.controller;
 
 import jakarta.annotation.PostConstruct;
 

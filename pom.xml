@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>dispatcher-service</module>
+        <module>telegram-bot-service</module>
         <module>core-service</module>
     </modules>
 
