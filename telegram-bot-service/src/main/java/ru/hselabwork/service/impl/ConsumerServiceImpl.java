@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import ru.hselabwork.controller.UpdateController;
-import ru.hselabwork.service.AnswerConsumer;
+import ru.hselabwork.service.ConsumerService;
 
 @Log4j
 @Service
 @RequiredArgsConstructor
 
-public class AnswerConsumerImpl implements AnswerConsumer {
+public class ConsumerServiceImpl implements ConsumerService {
     private final UpdateController updateController;
 
     @Override

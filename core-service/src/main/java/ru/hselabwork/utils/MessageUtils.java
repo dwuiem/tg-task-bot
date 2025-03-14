@@ -10,16 +10,29 @@ import java.util.List;
 
 public class MessageUtils {
 
-    private static final String noTasksResponse = "На текущий момент у вас <b>нет</b> никаких задач";
-    private static final String noTaskFoundResponse = "❗Задача <u>не найдена</u>. Возможно она была удалена";
-    private static final String taskDeletedResponse = "✅ Задача успешно <u>удалена</u>";
-    private static final String taskUpdated = "✅ Задача <u>обновлена</u>";
+    public static final String noAnswerMessage = "Такого варианта не существует";
+    public static final String noCallbackMessage = "Такого я ещё не умею";
+    public static final String taskNotFoundText = "❗Задача <u>не найдена</u>. Возможно она была удалена";
+    public static final String wrongTaskFormatText = "❗ Неверный формат задачи. Попробуй заново";
+    public static final String taskDeletedText = "✅ Задача успешно <u>удалена</u>";
+    public static final String taskUpdatedText = "✅ Задача успешно <u>обновлена</u>";
+    public static final String taskCreatedText = "✅ Задача успешно <u>создана</u>";
 
-    private static final String enterDescriptionMessage = "<b>Напиши новое описание к задаче</b>";
+    private static final String tasksNotFoundText = "На текущий момент у вас <b>нет</b> никаких задач";
+
+    public static final String enterTaskText =
+            """
+            <b>Опишите задачу в следующем формате</b>:
+            
+            <i>[0писание задачи]</i>
+            <i>[Дата 01.01.1111] [Время 11:11]</i>
+            """;
+
+    public static final String enterDescriptionMessage = "<b>Напиши новое описание к задаче</b>";
 
     public static SendMessage generateEnterDescriptionMessage(Long chatId) {
         InlineKeyboardButton cancelButton = new InlineKeyboardButton("Отменить");
-        cancelButton.setCallbackData("cancel");
+        cancelButton.setCallbackData("cancel:");
         InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup(List.of(List.of(cancelButton)));
 
         return SendMessage.builder()
@@ -30,32 +43,16 @@ public class MessageUtils {
                 .build();
     }
 
-    public static SendMessage generateTaskUpdatedMessage(Long chatId) {
+    public static SendMessage generateSendMessage(Long chatId, String text) {
         return SendMessage.builder()
                 .chatId(chatId)
-                .text(taskUpdated)
-                .parseMode("HTML")
-                .build();
-    }
-
-    public static SendMessage generateTaskDeletedMessage(Long chatId) {
-        return SendMessage.builder()
-                .chatId(chatId)
-                .text(taskDeletedResponse)
-                .parseMode("HTML")
-                .build();
-    }
-
-    public static SendMessage generateTaskNotFoundMessage(Long chatId) {
-        return SendMessage.builder()
-                .chatId(chatId)
-                .text(noTaskFoundResponse)
+                .text(text)
                 .parseMode("HTML")
                 .build();
     }
 
     public static SendMessage generateTaskInfoMessage(Task task, Long chatId) {
-        String text = TaskUtils.getFullTaskInfo(task);
+        String detailedTaskInfo = TaskUtils.getDetailedTaskInfo(task);
 
         List<List<InlineKeyboardButton>> rows = new ArrayList<>();
 
@@ -83,7 +80,7 @@ public class MessageUtils {
 
         return SendMessage.builder()
                 .chatId(chatId)
-                .text(text)
+                .text(detailedTaskInfo)
                 .parseMode("HTML")
                 .replyMarkup(markup)
                 .build();
@@ -93,12 +90,13 @@ public class MessageUtils {
 
         if (tasks.isEmpty()) {
             return SendMessage.builder()
-                    .text(noTasksResponse)
+                    .text(tasksNotFoundText)
+                    .chatId(chatId)
                     .parseMode("HTML")
                     .build();
         }
 
-        String responseText = MessageUtils.getTaskListInfo(tasks);
+        String taskListInfo = MessageUtils.getTaskListInfo(tasks);
 
         // Creating list markup
 
@@ -115,7 +113,7 @@ public class MessageUtils {
 
         return SendMessage.builder()
                 .chatId(chatId)
-                .text(responseText)
+                .text(taskListInfo)
                 .replyMarkup(markup)
                 .parseMode("HTML")
                 .build();

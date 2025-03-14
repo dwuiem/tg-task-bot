@@ -21,4 +21,5 @@ public class User {
     @Indexed(unique = true)
     private Long chatId;
     private UserState userState = UserState.NONE_STATE;
+    private ObjectId selectedTaskId;
 }

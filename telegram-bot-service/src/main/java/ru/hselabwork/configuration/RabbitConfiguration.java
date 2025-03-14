@@ -15,8 +15,8 @@ public class RabbitConfiguration {
     }
 
     @Bean
-    public Queue textMessageQueue() {
-        return new Queue("text_message_update");
+    public Queue messageQueue() {
+        return new Queue("message");
     }
 
     @Bean
@@ -31,6 +31,6 @@ public class RabbitConfiguration {
 
     @Bean
     public Queue callbackQueryQueue() {
-        return new Queue("callback_query_update");
+        return new Queue("callback_query");
     }
 }

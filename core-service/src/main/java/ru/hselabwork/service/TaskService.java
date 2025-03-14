@@ -19,8 +19,12 @@ public class TaskService {
         taskRepository.deleteById(taskId);
     }
 
-    public Task createTask(Task task) {
-        return taskRepository.save(task);
+    public void createTask(Task task) {
+        taskRepository.save(task);
+    }
+
+    public void updateTask(Task task) {
+        taskRepository.save(task);
     }
 
     public Task changeCompleted(Task task, boolean completed) {

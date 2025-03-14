@@ -1,25 +1,25 @@
-package ru.hselabwork.handler.impl;
+package ru.hselabwork.handler.message.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.hselabwork.handler.CommandProcessor;
+import org.telegram.telegrambots.meta.api.objects.Message;
+import ru.hselabwork.handler.message.MessageProcessor;
 import ru.hselabwork.model.UserState;
 import ru.hselabwork.service.ProducerService;
 import ru.hselabwork.service.UserService;
 
 @Component
 @RequiredArgsConstructor
-public class StartCommand implements CommandProcessor {
+public class StartCommand implements MessageProcessor {
     private final UserService userService;
     private final ProducerService producerService;
 
     private static final String welcomeMessage = "Добро пожаловать";
 
     @Override
-    public void process(Update update) {
-        Long chatId = update.getMessage().getChatId();
+    public void process(Message message) {
+        Long chatId = message.getChatId();
         userService.changeState(chatId, UserState.NONE_STATE);
         producerService.produceAnswer(
                 SendMessage.builder()

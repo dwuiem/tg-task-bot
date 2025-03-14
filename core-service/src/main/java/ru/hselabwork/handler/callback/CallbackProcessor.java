@@ -1,7 +1,7 @@
-package ru.hselabwork.handler;
+package ru.hselabwork.handler.callback;
 
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 
-public interface CallBackProcessor {
+public interface CallbackProcessor {
     void process(CallbackQuery callbackQuery);
 }

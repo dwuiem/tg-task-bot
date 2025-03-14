@@ -5,8 +5,10 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.hselabwork.service.UpdateProducer;
+import ru.hselabwork.service.ProducerService;
 import ru.hselabwork.utils.MessageUtils;
 
 @Component
@@ -16,7 +18,7 @@ public class UpdateController {
 
     private TelegramBot telegramBot;
     private final MessageUtils messageUtils;
-    private final UpdateProducer updateProducer;
+    private final ProducerService producerService;
 
     public void registerBot(TelegramBot telegramBot) {
         this.telegramBot = telegramBot;
@@ -33,16 +35,16 @@ public class UpdateController {
     private void distributeMessageByType(Update update) {
         var message = update.getMessage();
         if (update.hasCallbackQuery()) {
-            processCallBackQuery(update);
+            processCallBackQuery(update.getCallbackQuery());
         } else if (message.hasText()) {
-            processTextMessage(update);
+            processTextMessage(message);
         } else {
             setUnsupportedMessageTypeView(update);
         }
     }
 
-    private void processCallBackQuery(Update update) {
-        updateProducer.produce("callback_query_update", update);
+    private void processCallBackQuery(CallbackQuery callbackQuery) {
+        producerService.produceCallback("callback_query", callbackQuery);
     }
 
     private void setUnsupportedMessageTypeView(Update update) {
@@ -58,7 +60,7 @@ public class UpdateController {
         telegramBot.deleteMessage(deleteMessage);
     }
 
-    private void processTextMessage(Update update) {
-        updateProducer.produce("text_message_update", update);
+    private void processTextMessage(Message message) {
+        producerService.produceMessage("message", message);
     }
 }

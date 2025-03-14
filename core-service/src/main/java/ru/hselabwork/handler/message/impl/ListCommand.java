@@ -1,11 +1,10 @@
-package ru.hselabwork.handler.impl;
+package ru.hselabwork.handler.message.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.hselabwork.handler.CommandProcessor;
+import org.telegram.telegrambots.meta.api.objects.Message;
+import ru.hselabwork.handler.message.MessageProcessor;
 import ru.hselabwork.model.Task;
 import ru.hselabwork.model.User;
 import ru.hselabwork.model.UserState;
@@ -19,15 +18,15 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @Log4j
-public class ListCommand implements CommandProcessor {
+public class ListCommand implements MessageProcessor {
     private final UserService userService;
     private final TaskService taskService;
 
     private final ProducerService producerService;
 
     @Override
-    public void process(Update update) {
-        Long chatId = update.getMessage().getChatId();
+    public void process(Message message) {
+        Long chatId = message.getChatId();
         User user = userService.changeState(chatId, UserState.NONE_STATE);
         List<Task> tasks = taskService.getTasksFromUserId(user.getId());
         producerService.produceAnswer(

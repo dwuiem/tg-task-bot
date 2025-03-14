@@ -1,12 +1,12 @@
 package ru.hselabwork.utils;
 
+import ru.hselabwork.exception.TaskDescriptionParseException;
 import ru.hselabwork.model.Task;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,35 +18,36 @@ public class TaskUtils {
     private static final Pattern PATTERN = Pattern.compile("(.+?)(?:\\n(\\d{2}\\.\\d{2}\\.\\d{4}))?(?:\\s*(\\d{2}:\\d{2}))?");
 
 
-    public static Task parseTaskFromMessage(String message) throws DateTimeParseException {
+    public static Task parseTaskFromMessage(String message) throws Exception {
         Matcher matcher = PATTERN.matcher(message);
-        if (matcher.matches()) {
-            String description = matcher.group(1).trim();
-            String dateStr = matcher.group(2);
-            String timeStr = matcher.group(3);
+        if (!matcher.matches())
+            throw new TaskDescriptionParseException("Invalid message format: %s".formatted(message));
 
-            LocalDateTime deadline = null;
+        String description = matcher.group(1).trim();
+        String dateStr = matcher.group(2);
+        String timeStr = matcher.group(3);
 
-            if (dateStr != null || timeStr != null) {
-                    LocalDate date = (dateStr != null) ? LocalDate.parse(dateStr, DATE_FORMATTER) : LocalDate.now();
-                    LocalTime time = (timeStr != null) ? LocalTime.parse(timeStr, TIME_FORMATTER) : LocalTime.of(23, 59);
-                    deadline = LocalDateTime.of(date, time);
-            }
+        LocalDateTime deadline = null;
 
-            return Task.builder()
-                    .description(description)
-                    .completed(false)
-                    .deadline(deadline)
-                    .build();
+        if (dateStr != null || timeStr != null) {
+                LocalDate date = (dateStr != null) ? LocalDate.parse(dateStr, DATE_FORMATTER) : LocalDate.now();
+                LocalTime time = (timeStr != null) ? LocalTime.parse(timeStr, TIME_FORMATTER) : LocalTime.of(23, 59);
+                deadline = LocalDateTime.of(date, time);
         }
-        return null;
+
+        return Task.builder()
+                .description(description)
+                .completed(false)
+                .deadline(deadline)
+                .build();
+
     }
 
     public static String parseDateTime(LocalDateTime dateTime) {
         return dateTime.format(DATE_TIME_FORMATTER);
     }
 
-    public static String getFullTaskInfo(Task task) {
+    public static String getDetailedTaskInfo(Task task) {
         StringBuilder sb = new StringBuilder();
 
         sb.append("\uD83D\uDCCC <b>Задача</b>\n\n");

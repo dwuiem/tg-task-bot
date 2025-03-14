@@ -1,6 +1,7 @@
 package ru.hselabwork.service;
 
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import ru.hselabwork.model.User;
 import ru.hselabwork.model.UserState;
@@ -19,6 +20,12 @@ public class UserService {
                     .build();
             return userRepository.save(newUser);
         });
+    }
+
+    public User selectTask(Long chatId, ObjectId taskId) {
+        User user = findOrCreate(chatId);
+        user.setSelectedTaskId(taskId);
+        return userRepository.save(user);
     }
 
     public User changeState(Long chatId, UserState newState) {
