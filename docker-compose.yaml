@@ -1,6 +1,26 @@
 version: '3.8'
 
 services:
+  telegram-bot-service:
+    build: ./telegram-bot-service
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
+
+  core-service:
+    build: ./core-service
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
+      - mongodb
+
+
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
