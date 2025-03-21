@@ -37,20 +37,20 @@ public class EditDescriptionDetailsMessage implements MessageProcessor {
             producerService.produceAnswer(
                 generateSendMessage(user.getChatId(), taskNotFoundText)
             );
-        } else {
-            Task task = optionalTask.get();
-            task.setDescription(message.getText());
-            taskService.updateTask(task);
-            userService.changeState(user.getChatId(), UserState.NONE_STATE);
-
-            producerService.produceAnswer(
-                    generateSendMessage(message.getChatId(), taskUpdatedText)
-            );
-
-            producerService.produceAnswer(
-                    generateTaskInfoMessage(task, user.getChatId())
-            );
+            return;
         }
 
+        Task task = optionalTask.get();
+        task.setDescription(message.getText());
+        taskService.updateTask(task);
+        userService.changeState(user.getChatId(), UserState.NONE_STATE);
+
+        producerService.produceAnswer(
+                generateSendMessage(message.getChatId(), taskUpdatedText)
+        );
+
+        producerService.produceAnswer(
+                generateTaskInfoMessage(task, user.getChatId())
+        );
     }
 }

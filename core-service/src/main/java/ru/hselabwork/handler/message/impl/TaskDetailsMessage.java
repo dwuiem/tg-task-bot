@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
+import ru.hselabwork.exception.TaskDescriptionParseException;
 import ru.hselabwork.handler.message.MessageProcessor;
 import ru.hselabwork.model.Task;
 import ru.hselabwork.model.User;
@@ -37,7 +38,7 @@ public class TaskDetailsMessage implements MessageProcessor {
             producerService.produceAnswer(
                     generateSendMessage(user.getChatId(), taskCreatedText)
             );
-        } catch (Exception e) {
+        } catch (TaskDescriptionParseException e) {
             producerService.produceAnswer(
                     generateSendMessage(user.getChatId(), wrongTaskFormatText)
             );

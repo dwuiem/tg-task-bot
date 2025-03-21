@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,10 +16,10 @@ public class TaskUtils {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
     private static final Pattern PATTERN = Pattern.compile("(.+?)(?:\\n(\\d{2}\\.\\d{2}\\.\\d{4}))?(?:\\s*(\\d{2}:\\d{2}))?");
 
-
-    public static Task parseTaskFromMessage(String message) throws Exception {
+    public static Task parseTaskFromMessage(String message) throws TaskDescriptionParseException {
         Matcher matcher = PATTERN.matcher(message);
         if (!matcher.matches())
             throw new TaskDescriptionParseException("Invalid message format: %s".formatted(message));
@@ -28,11 +29,14 @@ public class TaskUtils {
         String timeStr = matcher.group(3);
 
         LocalDateTime deadline = null;
-
-        if (dateStr != null || timeStr != null) {
+        try {
+            if (dateStr != null || timeStr != null) {
                 LocalDate date = (dateStr != null) ? LocalDate.parse(dateStr, DATE_FORMATTER) : LocalDate.now();
                 LocalTime time = (timeStr != null) ? LocalTime.parse(timeStr, TIME_FORMATTER) : LocalTime.of(23, 59);
                 deadline = LocalDateTime.of(date, time);
+            }
+        } catch (DateTimeParseException e) {
+            throw new TaskDescriptionParseException("Invalid message format: %s".formatted(message));
         }
 
         return Task.builder()

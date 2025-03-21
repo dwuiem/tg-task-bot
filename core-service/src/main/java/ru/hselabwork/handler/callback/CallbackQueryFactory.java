@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
-import ru.hselabwork.handler.callback.impl.CompleteTaskCallback;
-import ru.hselabwork.handler.callback.impl.DeleteTaskCallback;
-import ru.hselabwork.handler.callback.impl.EditTaskDescriptionCallback;
-import ru.hselabwork.handler.callback.impl.ViewTaskCallback;
+import ru.hselabwork.handler.callback.impl.*;
 import ru.hselabwork.service.ProducerService;
 import ru.hselabwork.utils.CallbackUtils;
 
@@ -25,6 +22,7 @@ public class CallbackQueryFactory {
     private final ViewTaskCallback viewTaskCallback;
     private final DeleteTaskCallback deleteTaskCallback;
     private final EditTaskDescriptionCallback editTaskDescriptionCallback;
+    private final AddReminderCallback addReminderCallback;
 
     private final Map<String, CallbackProcessor> callbacks;
 
@@ -43,6 +41,7 @@ public class CallbackQueryFactory {
         callbacks.put("delete_task", deleteTaskCallback);
         callbacks.put("complete_task", completeTaskCallback);
         callbacks.put("edit_description", editTaskDescriptionCallback);
+        callbacks.put("add_reminder", addReminderCallback);
     }
 
     public CallbackProcessor getCallbackProcessor(CallbackQuery callbackQuery) {

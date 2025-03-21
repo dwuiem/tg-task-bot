@@ -7,10 +7,16 @@ import ru.hselabwork.model.User;
 import ru.hselabwork.model.UserState;
 import ru.hselabwork.repository.UserRepository;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+
+    public Optional<User> findUserById(ObjectId id) {
+        return userRepository.findById(id);
+    }
 
     public User findOrCreate(Long chatId) {
         return userRepository.findByChatId(chatId).orElseGet(() -> {

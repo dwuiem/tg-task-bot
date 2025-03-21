@@ -22,6 +22,7 @@ public class MessageFactory {
 
     private final TaskDetailsMessage taskDetailsMessage;
     private final EditDescriptionDetailsMessage editDescriptionDetailsMessage;
+    private final ReminderDetailsMessage reminderDetailsMessage;
 
 
     private final ProducerService producerService;
@@ -40,6 +41,7 @@ public class MessageFactory {
 
         detailsMessages.put(UserState.AWAITING_FOR_TASK, taskDetailsMessage);
         detailsMessages.put(UserState.AWAITING_FOR_DESCRIPTION, editDescriptionDetailsMessage);
+        detailsMessages.put(UserState.AWAITING_FOR_REMINDER, reminderDetailsMessage);
 
         commandMessages.put("/start", startCommand);
         commandMessages.put("/list", listCommand);
