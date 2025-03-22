@@ -8,7 +8,7 @@ import ru.hselabwork.model.UserState;
 import ru.hselabwork.service.ProducerService;
 import ru.hselabwork.service.UserService;
 
-import static ru.hselabwork.utils.MessageUtils.enterTaskText;
+import static ru.hselabwork.utils.MessageUtils.ENTER_TASK_TEXT;
 import static ru.hselabwork.utils.MessageUtils.generateSendMessage;
 
 @Component
@@ -26,7 +26,7 @@ public class AddCommand implements MessageProcessor {
         userService.changeState(chatId, UserState.AWAITING_FOR_TASK);
 
         producerService.produceAnswer(
-                generateSendMessage(chatId, enterTaskText)
+                generateSendMessage(chatId, ENTER_TASK_TEXT)
         );
     }
 }

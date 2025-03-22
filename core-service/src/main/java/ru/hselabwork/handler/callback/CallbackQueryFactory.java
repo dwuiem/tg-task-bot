@@ -13,7 +13,7 @@ import java.util.AbstractMap;
 import java.util.Map;
 
 import static ru.hselabwork.utils.MessageUtils.generateSendMessage;
-import static ru.hselabwork.utils.MessageUtils.noCallbackMessage;
+import static ru.hselabwork.utils.MessageUtils.NO_CALLBACK_TEXT;
 
 @Component
 @RequiredArgsConstructor
@@ -34,7 +34,7 @@ public class CallbackQueryFactory {
     public void init() {
         defaultCallbackProcessor = (callbackQuery) ->
                 producerService.produceAnswer(
-                        generateSendMessage(callbackQuery.getFrom().getId(), noCallbackMessage)
+                        generateSendMessage(callbackQuery.getFrom().getId(), NO_CALLBACK_TEXT)
                 );
 
         callbacks.put("view_task", viewTaskCallback);

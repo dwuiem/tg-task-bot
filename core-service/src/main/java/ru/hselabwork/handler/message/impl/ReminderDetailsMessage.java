@@ -44,7 +44,7 @@ public class ReminderDetailsMessage implements MessageProcessor {
             Optional<Task> optionalTask = taskService.getTaskById(user.getSelectedTaskId());
             if (optionalTask.isEmpty()) {
                 producerService.produceAnswer(
-                        generateSendMessage(chatId, taskNotFoundText)
+                        generateSendMessage(chatId, TASK_NOT_FOUND_TEXT)
                 );
                 return;
             }
@@ -70,12 +70,12 @@ public class ReminderDetailsMessage implements MessageProcessor {
             producerService.produceReminder(reminder, secondsBeforeReminder);
 
             producerService.produceAnswer(
-                    generateSendMessage(chatId, reminderCreatedText)
+                    generateSendMessage(chatId, REMINDER_CREATED_TEXT)
             );
 
         } catch (ReminderParseException e) {
             producerService.produceAnswer(
-                    generateSendMessage(chatId, wrongReminderFormatText)
+                    generateSendMessage(chatId, WRONG_REMINDER_FORMAT_TEXT)
             );
         }
     }

@@ -35,7 +35,7 @@ public class EditDescriptionDetailsMessage implements MessageProcessor {
         Optional<Task> optionalTask = taskService.getTaskById(user.getSelectedTaskId());
         if (optionalTask.isEmpty()) {
             producerService.produceAnswer(
-                generateSendMessage(user.getChatId(), taskNotFoundText)
+                generateSendMessage(user.getChatId(), TASK_NOT_FOUND_TEXT)
             );
             return;
         }
@@ -46,7 +46,7 @@ public class EditDescriptionDetailsMessage implements MessageProcessor {
         userService.changeState(user.getChatId(), UserState.NONE_STATE);
 
         producerService.produceAnswer(
-                generateSendMessage(message.getChatId(), taskUpdatedText)
+                generateSendMessage(message.getChatId(), TASK_UPDATED_TEXT)
         );
 
         producerService.produceAnswer(

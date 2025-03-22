@@ -32,7 +32,7 @@ public class DeleteTaskCallback implements CallbackProcessor {
 
         if (optionalTask.isEmpty()) {
             producerService.produceAnswer(
-                    generateSendMessage(chatId, taskNotFoundText)
+                    generateSendMessage(chatId, TASK_NOT_FOUND_TEXT)
             );
         } else {
             Task task = optionalTask.get();
@@ -47,7 +47,7 @@ public class DeleteTaskCallback implements CallbackProcessor {
             );
 
             producerService.produceAnswer(
-                    generateSendMessage(chatId, taskDeletedText)
+                    generateSendMessage(chatId, TASK_DELETED_TEXT)
             );
         }
     }

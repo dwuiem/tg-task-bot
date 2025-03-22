@@ -18,7 +18,7 @@ import java.util.AbstractMap;
 import java.util.Optional;
 
 import static ru.hselabwork.utils.MessageUtils.generateSendMessage;
-import static ru.hselabwork.utils.MessageUtils.taskNotFoundText;
+import static ru.hselabwork.utils.MessageUtils.TASK_NOT_FOUND_TEXT;
 
 @Component
 @RequiredArgsConstructor
@@ -37,7 +37,7 @@ public class EditTaskDescriptionCallback implements CallbackProcessor {
         Optional<Task> optionalTask = taskService.getTaskById(data.getValue());
         if (optionalTask.isEmpty()) {
             producerService.produceAnswer(
-                    generateSendMessage(chatId, taskNotFoundText)
+                    generateSendMessage(chatId, TASK_NOT_FOUND_TEXT)
             );
         } else {
             Task task = optionalTask.get();

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static ru.hselabwork.utils.MessageUtils.generateSendMessage;
-import static ru.hselabwork.utils.MessageUtils.noAnswerMessage;
+import static ru.hselabwork.utils.MessageUtils.NO_ANSWER_TEXT;
 
 @Component
 @RequiredArgsConstructor
@@ -36,7 +36,7 @@ public class MessageFactory {
     public void init() {
         defaultMessageProcessor = (msg) ->
             producerService.produceAnswer(
-                    generateSendMessage(msg.getChatId(), noAnswerMessage)
+                    generateSendMessage(msg.getChatId(), NO_ANSWER_TEXT)
             );
 
         detailsMessages.put(UserState.AWAITING_FOR_TASK, taskDetailsMessage);

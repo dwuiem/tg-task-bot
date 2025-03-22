@@ -5,7 +5,6 @@ import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.hselabwork.handler.callback.CallbackProcessor;
-import ru.hselabwork.model.Reminder;
 import ru.hselabwork.model.Task;
 import ru.hselabwork.model.UserState;
 import ru.hselabwork.service.ProducerService;
@@ -34,7 +33,7 @@ public class AddReminderCallback implements CallbackProcessor {
         Optional<Task> optionalTask = taskService.getTaskById(data.getValue());
         if (optionalTask.isEmpty()) {
             producerService.produceAnswer(
-                    generateSendMessage(chatId, taskNotFoundText)
+                    generateSendMessage(chatId, TASK_NOT_FOUND_TEXT)
             );
         } else {
             Task task = optionalTask.get();

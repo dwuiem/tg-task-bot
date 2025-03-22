@@ -11,35 +11,43 @@ import java.util.List;
 
 public class MessageUtils {
 
-    public static final String noAnswerMessage = "Такого варианта не существует";
-    public static final String noCallbackMessage = "Такого я ещё не умею";
-    public static final String taskNotFoundText = "❗Задача <u>не найдена</u>. Возможно она была удалена";
-    public static final String wrongTaskFormatText = "❗ Неверный формат задачи. Попробуй заново";
-    public static final String wrongReminderFormatText = "❗ Неверный формат времени напоминания. Попробуй заново";
-    public static final String taskDeletedText = "✅ Задача успешно <u>удалена</u>";
-    public static final String taskUpdatedText = "✅ Задача успешно <u>обновлена</u>";
-    public static final String taskCreatedText = "✅ Задача успешно <u>создана</u>";
-    public static final String reminderCreatedText = "✅ Напоминание успешно <u>создано</u>";
+    public static final String NO_ANSWER_TEXT = "Такого варианта не существует";
+    public static final String NO_CALLBACK_TEXT = "Такого я ещё не умею";
 
-    private static final String tasksNotFoundText = "На текущий момент у вас <b>нет</b> никаких задач";
+    public static final String TASK_NOT_FOUND_TEXT = "❗Задача <u>не найдена</u>. Возможно она была удалена";
+    public static final String WRONG_TASK_FORMAT_TEXT = "❗ Неверный формат задачи. Попробуй заново";
 
-    private static final String reminderText = "⏰ <u><b>НАПОМИНАНИЕ</b></u> ⏰";
+    public static final String TASK_DELETED_TEXT = "✅ Задача успешно <u>удалена</u>";
+    public static final String TASK_UPDATED_TEXT = "✅ Задача успешно <u>обновлена</u>";
+    public static final String TASK_CREATED_TEXT = "✅ Задача успешно <u>создана</u>";
 
-    public static final String enterTaskText =
+    public static final String WRONG_REMINDER_FORMAT_TEXT = "❗ Неверный формат времени напоминания. Попробуй заново";
+
+    public static final String REMINDER_CREATED_TEXT = "✅ Напоминание успешно <u>создано</u>";
+
+    private static final String TASKS_NOT_FOUND_TEXT = "На текущий момент у вас <b>нет</b> никаких задач";
+
+    private static final String REMINDER_TEXT = "⏰ <u><b>НАПОМИНАНИЕ</b></u> ⏰";
+
+    public static final String ENTER_TASK_TEXT =
             """
             <b>Опишите задачу в следующем формате</b>:
             
             <i>[0писание задачи]</i>
-            <i>[Дата 01.01.1111] [Время 11:11]</i>
+            <i>[Дата 01.01.1111] и/или [Время 11:11]</i>
             """;
 
-    public static final String enterDescriptionMessage = "Напиши <b>новое описание</b> к задаче";
-    public static final String enterReminderMessage = "Напиши <b>время</b> напоминания";
+    public static final String ENTER_DESCRIPTION_MESSAGE = "Напиши <b>новое описание</b> к задаче";
+    public static final String ENTER_REMINDER_MESSAGE =
+            """
+            Напиши <b>время</b> напоминания в формате:
+            <i>[Дата 01.01.1010] и/или [Время 11:11]</i>
+            """;
 
     public static SendMessage generateReminderMessage(Long chatId, Task task) {
         return SendMessage.builder()
                 .chatId(chatId)
-                .text("%s\n\n%s".formatted(reminderText, getTaskInfo(task)))
+                .text("%s\n\n%s".formatted(REMINDER_TEXT, getTaskInfo(task)))
                 .parseMode("HTML")
                 .build();
     }
@@ -51,7 +59,7 @@ public class MessageUtils {
 
         return SendMessage.builder()
                 .chatId(chatId)
-                .text(enterReminderMessage)
+                .text(ENTER_REMINDER_MESSAGE)
                 .parseMode("HTML")
                 .replyMarkup(keyboardMarkup)
                 .build();
@@ -64,7 +72,7 @@ public class MessageUtils {
 
         return SendMessage.builder()
                 .chatId(chatId)
-                .text(enterDescriptionMessage)
+                .text(ENTER_DESCRIPTION_MESSAGE)
                 .parseMode("HTML")
                 .replyMarkup(keyboardMarkup)
                 .build();
@@ -121,7 +129,7 @@ public class MessageUtils {
 
         if (tasks.isEmpty()) {
             return SendMessage.builder()
-                    .text(tasksNotFoundText)
+                    .text(TASKS_NOT_FOUND_TEXT)
                     .chatId(chatId)
                     .parseMode("HTML")
                     .build();
@@ -152,7 +160,6 @@ public class MessageUtils {
     }
 
     // Parse small information from task
-    // TODO Доделать
 
     private static String getTaskInfo(Task task) {
         StringBuilder sb = new StringBuilder();

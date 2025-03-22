@@ -2,7 +2,7 @@ bot:
   username: "hselabwork_task_bot"
   token: ${TELEGRAM_BOT_TOKEN}
 server:
-  port: ${TELEGRAM_BOT_SERVICE_PORT:8080}
+  port: 8080
 spring:
   rabbitmq:
     host: ${RABBIT_MQ_HOST:localhost}

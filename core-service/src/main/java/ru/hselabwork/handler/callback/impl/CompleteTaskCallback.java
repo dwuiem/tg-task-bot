@@ -32,7 +32,7 @@ public class CompleteTaskCallback implements CallbackProcessor {
         Optional<Task> optionalTask = taskService.getTaskById(data.getValue());
         if (optionalTask.isEmpty()) {
             producerService.produceAnswer(
-                    generateSendMessage(chatId, taskNotFoundText)
+                    generateSendMessage(chatId, TASK_NOT_FOUND_TEXT)
             );
         } else {
             Task task = optionalTask.get();
@@ -48,7 +48,7 @@ public class CompleteTaskCallback implements CallbackProcessor {
             );
 
             producerService.produceAnswer(
-                    generateSendMessage(chatId, taskUpdatedText)
+                    generateSendMessage(chatId, TASK_UPDATED_TEXT)
             );
 
             producerService.produceAnswer(
