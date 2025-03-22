@@ -17,7 +17,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class User {
     @Id
     private ObjectId id;
-
     @Indexed(unique = true)
     private Long chatId;
     private UserState userState = UserState.NONE_STATE;

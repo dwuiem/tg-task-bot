@@ -3,9 +3,13 @@ package ru.hselabwork.handler.message;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.hselabwork.handler.message.impl.*;
+import ru.hselabwork.model.User;
 import ru.hselabwork.model.UserState;
 import ru.hselabwork.service.ProducerService;
+import ru.hselabwork.service.UserService;
+import ru.hselabwork.utils.MessageUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,11 +28,11 @@ public class MessageFactory {
     private final EditDescriptionDetailsMessage editDescriptionDetailsMessage;
     private final ReminderDetailsMessage reminderDetailsMessage;
 
-
     private final ProducerService producerService;
+    private final UserService userService;
 
-    private final Map<UserState, MessageProcessor> detailsMessages = new HashMap<>();;
-    private final Map<String, MessageProcessor> commandMessages = new HashMap<>();;
+    private final Map<UserState, MessageProcessor> detailsMessages = new HashMap<>();
+    private final Map<String, MessageProcessor> commandMessages = new HashMap<>();
 
     private static MessageProcessor defaultMessageProcessor;
 
@@ -46,13 +50,18 @@ public class MessageFactory {
         commandMessages.put("/start", startCommand);
         commandMessages.put("/list", listCommand);
         commandMessages.put("/add", addCommand);
+
+        commandMessages.put(MessageUtils.TASKS_LIST_MESSAGE, listCommand);
+        commandMessages.put(MessageUtils.ADD_TASK_MESSAGE, addCommand);
     }
 
-    public MessageProcessor getCommand(String command) {
-        return commandMessages.getOrDefault(command, defaultMessageProcessor);
-    }
-
-    public MessageProcessor getDetailsMessage(UserState userState) {
-        return detailsMessages.getOrDefault(userState, defaultMessageProcessor);
+    public MessageProcessor getMessageProcessor(Message message) {
+        String text = message.getText();
+        if (commandMessages.containsKey(text)) {
+            return commandMessages.getOrDefault(text, defaultMessageProcessor);
+        } else {
+            User user = userService.findOrCreate(message.getChatId());
+            return detailsMessages.getOrDefault(user.getUserState(), defaultMessageProcessor);
+        }
     }
 }

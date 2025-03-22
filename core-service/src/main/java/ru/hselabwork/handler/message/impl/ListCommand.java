@@ -28,7 +28,7 @@ public class ListCommand implements MessageProcessor {
     public void process(Message message) {
         Long chatId = message.getChatId();
         User user = userService.changeState(chatId, UserState.NONE_STATE);
-        List<Task> tasks = taskService.getTasksFromUserId(user.getId());
+        List<Task> tasks = taskService.getTasksFromUserIdOrderedByDeadlineAsc(user.getId());
         producerService.produceAnswer(
                 MessageUtils.generateTaskListMessage(tasks, user.getChatId())
         );

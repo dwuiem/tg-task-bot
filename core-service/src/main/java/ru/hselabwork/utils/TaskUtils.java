@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,10 +60,52 @@ public class TaskUtils {
         sb.append(String.format("<i>Статус:</i> %s\n\n", (task.isCompleted() ? "✅" : "\uD83D\uDD34")));
         if (task.getDeadline() != null) {
             sb.append(String.format("⏳ %s\n", task.getDeadline().format(DATE_TIME_FORMATTER)));
+            if (!task.isCompleted()) {
+                LocalDateTime now = DateTimeUtils.getCurrentMoscowTime();
+                if (task.getDeadline().isAfter(now)) {
+                    sb.append(String.format("\n До дедлайна осталось: %s", DateTimeUtils.getTimeRemaining(now, task.getDeadline())));
+                } else {
+                    sb.append("\n <b>⚠ Просрочено!</b>");
+                }
+            }
         }
         sb.append(String.format("Создан: %s", task.getCreated().format(DATE_TIME_FORMATTER)));
 
         return sb.toString();
     }
 
+    // Parse small information from task
+
+    public static String getTaskInfo(Task task) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(task.getDescription());
+        if (task.getDeadline() != null) {
+            sb.append(String.format("\n⏳ <u>%s</u>", TaskUtils.parseDateTime(task.getDeadline())));
+            if (!task.isCompleted()) {
+                LocalDateTime now = DateTimeUtils.getCurrentMoscowTime();
+                if (task.getDeadline().isAfter(now)) {
+                    sb.append(String.format("\n До дедлайна осталось: %s", DateTimeUtils.getTimeRemaining(now, task.getDeadline())));
+                } else {
+                    sb.append("\n <b>⚠ Просрочено!</b>");
+                }
+            }
+        }
+
+        return sb.toString();
+    }
+
+    // Parse information from list of tasks
+
+    public static String getTaskListInfo(List<Task> tasks) {
+        StringBuilder sb = new StringBuilder("\uD83D\uDD39 Ваш список задач:\n\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            if (task.isCompleted()) {
+                sb.append(String.format("<s>%d. %s</s>\n\n", i + 1, getTaskInfo(task)));
+            } else {
+                sb.append(String.format("%d. %s\n\n", i + 1, getTaskInfo(task)));
+            }
+        }
+        return sb.toString();
+    }
 }

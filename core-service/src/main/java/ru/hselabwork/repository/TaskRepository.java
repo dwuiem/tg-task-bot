@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface TaskRepository extends MongoRepository<Task, ObjectId> {
-    List<Task> findAllByUserId(ObjectId userId);
+    List<Task> findAllByUserIdOrderByDeadlineAsc(ObjectId userId);
 }

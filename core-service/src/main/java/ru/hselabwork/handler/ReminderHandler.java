@@ -24,7 +24,7 @@ public class ReminderHandler {
     private final UserService userService;
 
     public void handle(Reminder reminder) {
-        Optional<Reminder> optionalReminder = reminderService.getReminder(reminder.getId());
+        Optional<Reminder> optionalReminder = reminderService.findReminderById(reminder.getId());
 
         if (optionalReminder.isEmpty()) {
             log.info("Reminder with id " + reminder.getId() + " not found");
@@ -56,6 +56,7 @@ public class ReminderHandler {
 
         log.info("Task remind " + reminder.getTaskId());
 
+        reminderService.deleteReminderById(reminder.getId());
         producerService.produceAnswer(
                 MessageUtils.generateReminderMessage(chatId, task)
         );

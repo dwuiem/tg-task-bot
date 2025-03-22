@@ -27,13 +27,8 @@ public class TaskService {
         taskRepository.save(task);
     }
 
-    public Task changeCompleted(Task task, boolean completed) {
-        task.setCompleted(completed);
-        return taskRepository.save(task);
-    }
-
-    public List<Task> getTasksFromUserId(ObjectId userId) {
-        return taskRepository.findAllByUserId(userId);
+    public List<Task> getTasksFromUserIdOrderedByDeadlineAsc(ObjectId userId) {
+        return taskRepository.findAllByUserIdOrderByDeadlineAsc(userId);
     }
 
     public Optional<Task> getTaskById(ObjectId taskId) {

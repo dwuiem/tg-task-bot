@@ -36,7 +36,8 @@ public class CompleteTaskCallback implements CallbackProcessor {
             );
         } else {
             Task task = optionalTask.get();
-            Task updatedTask = taskService.changeCompleted(task, !task.isCompleted());
+            task.setCompleted(!task.isCompleted());
+            taskService.updateTask(task);
 
             Integer messageId = callbackQuery.getMessage().getMessageId();
 
@@ -52,7 +53,7 @@ public class CompleteTaskCallback implements CallbackProcessor {
             );
 
             producerService.produceAnswer(
-                    generateTaskInfoMessage(updatedTask, chatId)
+                    generateTaskInfoMessage(task, chatId)
             );
         }
     }

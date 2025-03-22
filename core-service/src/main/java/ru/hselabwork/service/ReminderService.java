@@ -16,9 +16,12 @@ public class ReminderService {
     public Reminder addReminder(Reminder reminder) {
         return reminderRepository.save(reminder);
     }
+
+    public void deleteReminderById(ObjectId id) {
+        reminderRepository.deleteById(id);
+    }
     
-    // TODO Check reminder id
-    public Optional<Reminder> getReminder(ObjectId id) {
+    public Optional<Reminder> findReminderById(ObjectId id) {
         return reminderRepository.findById(id);
     }
 }
