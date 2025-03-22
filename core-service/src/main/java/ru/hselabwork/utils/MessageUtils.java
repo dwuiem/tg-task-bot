@@ -5,6 +5,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import ru.hselabwork.model.Task;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -151,13 +152,23 @@ public class MessageUtils {
     }
 
     // Parse small information from task
+    // TODO Доделать
 
     private static String getTaskInfo(Task task) {
         StringBuilder sb = new StringBuilder();
         sb.append(task.getDescription());
+        LocalDateTime now = DateTimeUtils.getCurrentMoscowTime();
         if (task.getDeadline() != null) {
             sb.append(String.format("\n⏳ <u>%s</u>", TaskUtils.parseDateTime(task.getDeadline())));
+            if (!task.isCompleted()) {
+                if (task.getDeadline().isAfter(now)) {
+                    sb.append(String.format("\n До дедлайна осталось: %s", DateTimeUtils.getTimeRemaining(now, task.getDeadline())));
+                } else {
+                    sb.append("\n <b>⚠ Просрочено!</b>");
+                }
+            }
         }
+
         return sb.toString();
     }
 

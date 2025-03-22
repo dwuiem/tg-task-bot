@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
+import static ru.hselabwork.utils.DateTimeUtils.getCurrentMoscowTime;
+
 @Document(collection = "tasks")
 @Data
 @NoArgsConstructor
@@ -22,6 +24,6 @@ public class Task {
     private ObjectId userId;
     private String description;
     private LocalDateTime deadline;
-    private LocalDateTime created = LocalDateTime.now();
+    private LocalDateTime created = getCurrentMoscowTime();
     private boolean completed;
 }

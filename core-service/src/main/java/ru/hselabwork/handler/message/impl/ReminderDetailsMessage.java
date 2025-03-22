@@ -2,7 +2,6 @@ package ru.hselabwork.handler.message.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.hselabwork.exception.ReminderParseException;
@@ -20,6 +19,7 @@ import ru.hselabwork.utils.ReminderUtils;
 import java.time.*;
 import java.util.Optional;
 
+import static ru.hselabwork.utils.DateTimeUtils.getCurrentMoscowTime;
 import static ru.hselabwork.utils.MessageUtils.*;
 
 @Log4j
@@ -53,7 +53,7 @@ public class ReminderDetailsMessage implements MessageProcessor {
             Reminder newReminder = Reminder.builder()
                     .reminderTime(reminderTime)
                     .taskId(task.getId())
-                    .createdAt(LocalDateTime.now())
+                    .createdAt(getCurrentMoscowTime())
                     .cancelled(false)
                     .build();
 
