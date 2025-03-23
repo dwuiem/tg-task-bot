@@ -33,11 +33,6 @@ public class ReminderHandler {
 
         reminder = optionalReminder.get();
 
-        if (reminder.getCancelled()) {
-            log.info("Reminder with id " + reminder.getId() + " has been cancelled");
-            return;
-        }
-
         Optional<Task> optionalTask = taskService.getTaskById(reminder.getTaskId());
         if (optionalTask.isEmpty()) {
             log.info("Task with id " + reminder.getTaskId() + " not found");
@@ -47,8 +42,8 @@ public class ReminderHandler {
         Task task = optionalTask.get();
         Optional<User> optionalUser = userService.findUserById(task.getUserId());
 
-        if (task.isCompleted() || optionalUser.isEmpty()) {
-            log.info("Task with id " + reminder.getTaskId() + " has been completed");
+        if (optionalUser.isEmpty()) {
+            log.info("User not found");
             return;
         }
 

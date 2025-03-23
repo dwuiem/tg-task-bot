@@ -26,5 +26,4 @@ public class Reminder {
     private LocalDateTime createdAt;
     @Indexed
     private ObjectId taskId;
-    private Boolean cancelled;
 }

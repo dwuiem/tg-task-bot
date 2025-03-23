@@ -7,12 +7,12 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.hselabwork.handler.callback.CallbackProcessor;
 import ru.hselabwork.model.Task;
+import ru.hselabwork.model.User;
 import ru.hselabwork.model.UserState;
 import ru.hselabwork.service.ProducerService;
 import ru.hselabwork.service.TaskService;
 import ru.hselabwork.service.UserService;
 import ru.hselabwork.utils.CallbackUtils;
-import ru.hselabwork.utils.MessageUtils;
 
 import java.util.AbstractMap;
 import java.util.Optional;
@@ -21,11 +21,10 @@ import static ru.hselabwork.utils.MessageUtils.*;
 
 @Component
 @RequiredArgsConstructor
-public class EditTaskDescriptionCallback implements CallbackProcessor {
-
+public class EditTaskDeadlineCallback implements CallbackProcessor {
+    private final UserService userService;
     private final TaskService taskService;
     private final ProducerService producerService;
-    private final UserService userService;
 
     @Override
     public void process(CallbackQuery callbackQuery) {
@@ -41,7 +40,7 @@ public class EditTaskDescriptionCallback implements CallbackProcessor {
         } else {
             Task task = optionalTask.get();
 
-            userService.changeState(chatId, UserState.ENTER_NEW_DESCRIPTION);
+            userService.changeState(chatId, UserState.ENTER_NEW_DEADLINE);
             userService.selectTask(chatId, task.getId());
 
             Integer messageId = callbackQuery.getMessage().getMessageId();
@@ -52,7 +51,9 @@ public class EditTaskDescriptionCallback implements CallbackProcessor {
                             .build()
             );
 
-            producerService.produceAnswer(MessageUtils.generateSendMessage(chatId, ENTER_DESCRIPTION_TEXT));
+            producerService.produceAnswer(
+                    generateSendMessage(chatId, ENTER_NEW_DEADLINE_TEXT)
+            );
         }
     }
 }

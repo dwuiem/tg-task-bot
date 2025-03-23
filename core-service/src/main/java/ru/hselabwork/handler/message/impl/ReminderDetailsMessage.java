@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.hselabwork.exception.ReminderParseException;
+import ru.hselabwork.exception.WrongDateTimeException;
 import ru.hselabwork.handler.message.MessageProcessor;
 import ru.hselabwork.model.Reminder;
 import ru.hselabwork.model.Task;
@@ -70,7 +70,6 @@ public class ReminderDetailsMessage implements MessageProcessor {
                     .reminderTime(reminderTime)
                     .taskId(task.getId())
                     .createdAt(getCurrentMoscowTime())
-                    .cancelled(false)
                     .build();
 
             Reminder reminder = reminderService.addReminder(newReminder);
@@ -90,7 +89,7 @@ public class ReminderDetailsMessage implements MessageProcessor {
                     generateSendMessage(chatId, REMINDER_CREATED_TEXT)
             );
 
-        } catch (ReminderParseException e) {
+        } catch (WrongDateTimeException e) {
             producerService.produceAnswer(
                     generateSendMessage(chatId, WRONG_REMINDER_FORMAT_TEXT)
             );

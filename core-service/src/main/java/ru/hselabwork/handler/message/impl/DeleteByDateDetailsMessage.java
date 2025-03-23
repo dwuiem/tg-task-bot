@@ -20,7 +20,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class DeletingDateMessage implements MessageProcessor {
+public class DeleteByDateDetailsMessage implements MessageProcessor {
 
     private final UserService userService;
     private final ProducerService producerService;

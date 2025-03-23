@@ -25,9 +25,10 @@ public class MessageFactory {
     private final StartCommand startCommand;
 
     private final TaskDetailsMessage taskDetailsMessage;
-    private final EditDescriptionDetailsMessage editDescriptionDetailsMessage;
     private final ReminderDetailsMessage reminderDetailsMessage;
-    private final DeletingDateMessage deletingDateMessage;
+    private final DeleteByDateDetailsMessage deleteByDateDetailsMessage;
+    private final EditDescriptionDetailsMessage editDescriptionDetailsMessage;
+    private final EditDeadlineDetailsMessage editDeadlineDetailsMessage;
 
     private final ProducerService producerService;
     private final UserService userService;
@@ -45,9 +46,10 @@ public class MessageFactory {
             );
 
         detailsMessages.put(UserState.ENTER_TASK_DETAILS, taskDetailsMessage);
-        detailsMessages.put(UserState.ENTER_DESCRIPTION, editDescriptionDetailsMessage);
+        detailsMessages.put(UserState.ENTER_NEW_DESCRIPTION, editDescriptionDetailsMessage);
         detailsMessages.put(UserState.ENTER_REMINDER_DETAILS, reminderDetailsMessage);
-        detailsMessages.put(UserState.ENTER_DELETING_DATE, deletingDateMessage);
+        detailsMessages.put(UserState.ENTER_DELETING_DATE, deleteByDateDetailsMessage);
+        detailsMessages.put(UserState.ENTER_NEW_DEADLINE, editDeadlineDetailsMessage);
 
         commandMessages.put("/start", startCommand);
         commandMessages.put("/list", listCommand);

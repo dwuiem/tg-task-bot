@@ -2,7 +2,7 @@ package ru.hselabwork.utils;
 
 
 
-import ru.hselabwork.exception.ReminderParseException;
+import ru.hselabwork.exception.WrongDateTimeException;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -29,23 +29,23 @@ public class DateTimeUtils {
         return LocalDate.parse(text, formatter);
     }
 
-    public static LocalDateTime parseDateTimeFromText(String text) throws ReminderParseException {
+    public static LocalDateTime parseDateTimeFromText(String text) throws WrongDateTimeException {
         Matcher matcher = DATETIME_PATTERN.matcher(text);
         if (!matcher.matches())
-            throw new ReminderParseException("Invalid message format: " + text);
+            throw new WrongDateTimeException("Invalid message format: " + text);
 
         String dateStr = matcher.group(1);
         String timeStr = matcher.group(2);
 
         if (dateStr == null && timeStr == null) {
-            throw new ReminderParseException("Invalid message format: " + text);
+            throw new WrongDateTimeException("Invalid message format: " + text);
         }
         try {
             LocalDate date = (dateStr != null) ? LocalDate.parse(dateStr, DATE_FORMATTER) : LocalDate.now();
             LocalTime time = (timeStr != null) ? LocalTime.parse(timeStr, TIME_FORMATTER) : LocalTime.of(23, 59);
             return LocalDateTime.of(date, time);
         } catch (DateTimeParseException e) {
-            throw new ReminderParseException("Invalid message format: " + text);
+            throw new WrongDateTimeException("Invalid message format: " + text);
         }
     }
 

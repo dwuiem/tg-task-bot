@@ -143,7 +143,7 @@ public class TaskUtils {
         editDescription.setCallbackData("edit_description:" + task.getId());
 
         InlineKeyboardButton editDateTime = new InlineKeyboardButton("Изменить дату и время");
-        editDateTime.setCallbackData("edit_datetime:" + task.getId());
+        editDateTime.setCallbackData("edit_deadline:" + task.getId());
 
         InlineKeyboardButton addReminder = new InlineKeyboardButton("Добавить напоминание ⏰");
         addReminder.setCallbackData("add_reminder:" + task.getId());
@@ -201,13 +201,9 @@ public class TaskUtils {
         InlineKeyboardButton deleteTasksByDate = new InlineKeyboardButton("Удалить задачи на конкретный день");
         deleteTasksByDate.setCallbackData("delete_tasks_by_date");
 
-        InlineKeyboardButton deleteCompletedTasks = new InlineKeyboardButton("Удалить выполненные задачи");
-        deleteCompletedTasks.setCallbackData("delete_completed_tasks");
-
         var markup = new InlineKeyboardMarkup(List.of(
                 tasksList,
-                List.of(deleteTasksByDate),
-                List.of(deleteCompletedTasks)
+                List.of(deleteTasksByDate)
         ));
 
         return SendMessage.builder()

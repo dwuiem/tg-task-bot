@@ -28,7 +28,7 @@ public class CompleteTaskCallback implements CallbackProcessor {
     public void process(CallbackQuery callbackQuery) {
         AbstractMap.SimpleEntry<String, ObjectId> data = CallbackUtils.parseCallbackData(callbackQuery.getData());
 
-        var chatId = callbackQuery.getFrom().getId();
+        Long chatId = callbackQuery.getFrom().getId();
 
         Optional<Task> optionalTask = taskService.getTaskById(data.getValue());
         if (optionalTask.isEmpty()) {

@@ -18,12 +18,14 @@ import static ru.hselabwork.utils.MessageUtils.NO_CALLBACK_TEXT;
 @Component
 @RequiredArgsConstructor
 public class CallbackQueryFactory {
-    private final CompleteTaskCallback completeTaskCallback;
     private final ViewTaskCallback viewTaskCallback;
-    private final DeleteTaskCallback deleteTaskCallback;
+    private final CompleteTaskCallback completeTaskCallback;
     private final EditTaskDescriptionCallback editTaskDescriptionCallback;
-    private final AddReminderCallback addReminderCallback;
+    private final EditTaskDeadlineCallback editTaskDeadlineCallback;
+    private final DeleteTaskCallback deleteTaskCallback;
     private final DeleteTasksByDateCallback deleteTasksByDateCallback;
+    private final DeleteDeadlineCallback deleteDeadlineCallback;
+    private final AddReminderCallback addReminderCallback;
 
     private final Map<String, CallbackProcessor> callbacks;
 
@@ -44,6 +46,8 @@ public class CallbackQueryFactory {
         callbacks.put("edit_description", editTaskDescriptionCallback);
         callbacks.put("add_reminder", addReminderCallback);
         callbacks.put("delete_tasks_by_date", deleteTasksByDateCallback);
+        callbacks.put("edit_deadline", editTaskDeadlineCallback);
+        callbacks.put("delete_deadline", deleteDeadlineCallback);
     }
 
     public CallbackProcessor getCallbackProcessor(CallbackQuery callbackQuery) {
