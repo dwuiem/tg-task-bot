@@ -27,6 +27,7 @@ cd task-bot
 
 Создайте `.env` файл в корне проекта со следующими переменными
 ```env
+TELEGRAM_BOT_NAME=<имя бота>
 TELEGRAM_BOT_TOKEN=<ваш токен>
 
 RABBIT_MQ_HOST=rabbitmq
@@ -57,3 +58,41 @@ tg-task-bot/
 ```
 1. `telegram-bot-service` - Сервис для взаимодействия с Telegram API, отправки сообщений в очередь
 2. `core-service` - Сервис для обработки сообщений, взаимодействие с MongoDB
+
+## MongoDB collections
+
+В проекте используются три основные коллекции в базе данных MongoDB: users, tasks, и reminders. Каждая коллекция представляет собой различные сущности.
+
+Коллекция `users` хранит информацию о пользователях, которые взаимодействуют с Telegram ботом.
+```json
+{
+  "_id": "ObjectId('605c72ef15320736b63a89d1')",
+  "chatId": 1234567890, 
+  "userState": "NONE_STATE",
+  "selectedTaskId": "ObjectId('605c72ef15320736b63a89d2')"
+}
+```
+
+Документ `tasks` хранит задачи пользователей. Каждая задача может иметь несколько напоминаний.
+
+```json
+{
+  "_id": "ObjectId('605c72ef15320736b63a89d2')",
+  "userId": "ObjectId('605c72ef15320736b63a89d1')",
+  "description": "Finish the project",
+  "deadline": "2025-03-25T10:00:00",
+  "created": "2025-03-20T09:00:00",
+  "completed": false
+}
+```
+
+Коллекция `reminders` хранит напоминания для задач. Каждое напоминание привязано к конкретной задаче.
+
+```json
+{
+  "_id": "ObjectId('605c72ef15320736b63a89d3')",
+  "reminderTime": "2025-03-24T09:00:00",
+  "createdAt": "2025-03-20T09:00:00",
+  "taskId": "ObjectId('605c72ef15320736b63a89d2')"
+}
+```

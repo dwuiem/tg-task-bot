@@ -1,5 +1,5 @@
 bot:
-  username: "hselabwork_task_bot"
+  username: ${TELEGRAM_BOT_NAME:hselabwork_task_bot}
   token: ${TELEGRAM_BOT_TOKEN}
 server:
   port: 8080
