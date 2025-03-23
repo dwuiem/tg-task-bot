@@ -41,7 +41,7 @@ public class DateTimeUtils {
             throw new WrongDateTimeException("Invalid message format: " + text);
         }
         try {
-            LocalDate date = (dateStr != null) ? LocalDate.parse(dateStr, DATE_FORMATTER) : LocalDate.now();
+            LocalDate date = (dateStr != null) ? LocalDate.parse(dateStr, DATE_FORMATTER) : getCurrentMoscowTime().toLocalDate();
             LocalTime time = (timeStr != null) ? LocalTime.parse(timeStr, TIME_FORMATTER) : LocalTime.of(23, 59);
             return LocalDateTime.of(date, time);
         } catch (DateTimeParseException e) {

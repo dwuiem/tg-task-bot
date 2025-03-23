@@ -3,6 +3,8 @@ package ru.hselabwork.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -21,6 +23,7 @@ import java.util.Optional;
 public class ConsumerServiceImpl implements ConsumerService {
     private final UpdateHandler updateHandler;
     private final ReminderHandler reminderHandler;
+    private final RabbitTemplate rabbitTemplate;
 
     @Override
     @RabbitListener(queues = "message")

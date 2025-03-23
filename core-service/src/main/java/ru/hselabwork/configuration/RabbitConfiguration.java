@@ -15,9 +15,9 @@ public class RabbitConfiguration {
 
     @Bean
     public Queue taskReminderQueue() {
-        return QueueBuilder.durable("task-reminders")
-                .withArgument("x-dead-letter-exchange", "task-exchange")
-                .withArgument("x-dead-letter-routing-key", "expired-reminders")  // Маршрут для просроченных сообщений.
+        return QueueBuilder.durable("reminders")
+                .withArgument("x-dead-letter-exchange", "reminder-exchange")
+                .withArgument("x-dead-letter-routing-key", "expired-reminders")
                 .build();
     }
 
@@ -28,12 +28,12 @@ public class RabbitConfiguration {
 
     @Bean
     public DirectExchange exchange() {
-        return new DirectExchange("task-exchange");
+        return new DirectExchange("reminder-exchange");
     }
 
     @Bean
     public Binding taskRemindersBinding(Queue taskReminderQueue, DirectExchange exchange) {
-        return BindingBuilder.bind(taskReminderQueue).to(exchange).with("task-reminders");
+        return BindingBuilder.bind(taskReminderQueue).to(exchange).with("reminders");
     }
 
     @Bean
