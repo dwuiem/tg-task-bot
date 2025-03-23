@@ -38,6 +38,6 @@ public class RabbitConfiguration {
 
     @Bean
     public Binding expiredRemindersBinding(Queue expiredReminderQueue, DirectExchange exchange) {
-        return BindingBuilder.bind(expiredReminderQueue).to(exchange).with("expired_reminders");
+        return BindingBuilder.bind(expiredReminderQueue).to(exchange).with("expired-reminders");
     }
 }

@@ -17,8 +17,7 @@ import ru.hselabwork.utils.MessageUtils;
 import java.util.AbstractMap;
 import java.util.Optional;
 
-import static ru.hselabwork.utils.MessageUtils.generateSendMessage;
-import static ru.hselabwork.utils.MessageUtils.TASK_NOT_FOUND_TEXT;
+import static ru.hselabwork.utils.MessageUtils.*;
 
 @Component
 @RequiredArgsConstructor
@@ -53,7 +52,7 @@ public class EditTaskDescriptionCallback implements CallbackProcessor {
                             .build()
             );
 
-            producerService.produceAnswer(MessageUtils.generateEnterDescriptionMessage(chatId));
+            producerService.produceAnswer(MessageUtils.generateSendMessage(chatId, ENTER_DESCRIPTION_TEXT));
         }
     }
 }

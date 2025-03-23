@@ -38,7 +38,6 @@ public class ReminderDetailsMessage implements MessageProcessor {
         Long chatId = message.getChatId();
 
         try {
-            LocalDateTime reminderTime = ReminderUtils.parseDateTimeFromMessage(text);
             User user = userService.findOrCreate(chatId);
 
             Optional<Task> optionalTask = taskService.getTaskById(user.getSelectedTaskId());
@@ -49,7 +48,24 @@ public class ReminderDetailsMessage implements MessageProcessor {
                 return;
             }
 
+            LocalDateTime reminderTime = ReminderUtils.parseDateTimeFromMessage(text);
+
+            if (reminderTime.isBefore(getCurrentMoscowTime())) {
+                producerService.produceAnswer(
+                        generateSendMessage(chatId, REMINDER_BEFORE_NOW)
+                );
+                return;
+            }
+
             Task task = optionalTask.get();
+
+            if (task.getDeadline() != null && reminderTime.isAfter(task.getDeadline())) {
+                producerService.produceAnswer(
+                        generateSendMessage(chatId, REMINDER_AFTER_DEADLINE)
+                );
+                return;
+            }
+
             Reminder newReminder = Reminder.builder()
                     .reminderTime(reminderTime)
                     .taskId(task.getId())
@@ -67,6 +83,7 @@ public class ReminderDetailsMessage implements MessageProcessor {
 
             long secondsBeforeReminder = Duration.between(nowMoscow, reminderMoscow).getSeconds();
             log.debug("Second before reminder " + secondsBeforeReminder);
+
             producerService.produceReminder(reminder, secondsBeforeReminder);
 
             producerService.produceAnswer(

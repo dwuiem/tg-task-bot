@@ -1,14 +1,20 @@
 package ru.hselabwork.utils;
 
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.hselabwork.exception.ReminderParseException;
+import ru.hselabwork.model.Reminder;
+import ru.hselabwork.model.Task;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static ru.hselabwork.utils.MessageUtils.REMINDER_TEXT;
 
 public class ReminderUtils {
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
@@ -37,5 +43,13 @@ public class ReminderUtils {
         } catch (DateTimeParseException e) {
             throw new ReminderParseException("Invalid message format: " + message);
         }
+    }
+
+    public static SendMessage generateReminderMessage(Long chatId, Task task) {
+        return SendMessage.builder()
+                .chatId(chatId)
+                .text("%s\n\n%s".formatted(REMINDER_TEXT, TaskUtils.getTaskInfo(task)))
+                .parseMode("HTML")
+                .build();
     }
 }

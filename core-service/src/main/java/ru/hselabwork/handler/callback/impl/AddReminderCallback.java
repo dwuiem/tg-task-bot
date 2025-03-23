@@ -41,7 +41,7 @@ public class AddReminderCallback implements CallbackProcessor {
             userService.changeState(chatId, UserState.AWAITING_FOR_REMINDER);
             userService.selectTask(chatId, task.getId());
 
-            producerService.produceAnswer(generateEnterReminderMessage(chatId));
+            producerService.produceAnswer(generateSendMessage(chatId, ENTER_REMINDER_TEXT));
         }
     }
 }

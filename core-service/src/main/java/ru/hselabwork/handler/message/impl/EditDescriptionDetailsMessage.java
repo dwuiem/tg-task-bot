@@ -11,6 +11,7 @@ import ru.hselabwork.model.UserState;
 import ru.hselabwork.service.ProducerService;
 import ru.hselabwork.service.TaskService;
 import ru.hselabwork.service.UserService;
+import ru.hselabwork.utils.TaskUtils;
 
 import java.util.Optional;
 
@@ -50,7 +51,7 @@ public class EditDescriptionDetailsMessage implements MessageProcessor {
         );
 
         producerService.produceAnswer(
-                generateTaskInfoMessage(task, user.getChatId())
+                TaskUtils.generateTaskInfoMessage(task, user.getChatId())
         );
     }
 }

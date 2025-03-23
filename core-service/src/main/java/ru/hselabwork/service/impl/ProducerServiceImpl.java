@@ -29,6 +29,7 @@ public class ProducerServiceImpl implements ProducerService {
 
     @Override
     public void produceReminder(Reminder reminder, long reminderTimeInSeconds) {
+        log.debug("Sent reminder");
         long ttl = reminderTimeInSeconds * 1000L;
         rabbitTemplate.convertAndSend(
                 "task-exchange",

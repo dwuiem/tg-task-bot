@@ -12,7 +12,7 @@ import ru.hselabwork.service.ProducerService;
 import ru.hselabwork.service.TaskService;
 import ru.hselabwork.service.UserService;
 import ru.hselabwork.utils.CallbackUtils;
-import ru.hselabwork.utils.MessageUtils;
+import ru.hselabwork.utils.TaskUtils;
 
 import java.util.AbstractMap;
 import java.util.Optional;
@@ -45,7 +45,9 @@ public class ViewTaskCallback implements CallbackProcessor {
             userService.changeState(chatId, UserState.NONE_STATE);
             userService.selectTask(chatId, task.getId());
             log.debug("User {} selected task: {}", callbackQuery.getFrom().getUserName(), task.getDescription());
-            producerService.produceAnswer(MessageUtils.generateTaskInfoMessage(task, chatId));
+            producerService.produceAnswer(
+                    TaskUtils.generateTaskInfoMessage(task, chatId)
+            );
         }
     }
 }

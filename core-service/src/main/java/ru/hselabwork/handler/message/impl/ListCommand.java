@@ -11,7 +11,7 @@ import ru.hselabwork.model.UserState;
 import ru.hselabwork.service.ProducerService;
 import ru.hselabwork.service.TaskService;
 import ru.hselabwork.service.UserService;
-import ru.hselabwork.utils.MessageUtils;
+import ru.hselabwork.utils.TaskUtils;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class ListCommand implements MessageProcessor {
         User user = userService.changeState(chatId, UserState.NONE_STATE);
         List<Task> tasks = taskService.getTasksFromUserIdOrderedByDeadlineAsc(user.getId());
         producerService.produceAnswer(
-                MessageUtils.generateTaskListMessage(tasks, user.getChatId())
+                TaskUtils.generateTaskListMessage(tasks, user.getChatId())
         );
     }
 

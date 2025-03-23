@@ -10,7 +10,7 @@ import ru.hselabwork.service.ProducerService;
 import ru.hselabwork.service.ReminderService;
 import ru.hselabwork.service.TaskService;
 import ru.hselabwork.service.UserService;
-import ru.hselabwork.utils.MessageUtils;
+import ru.hselabwork.utils.ReminderUtils;
 
 import java.util.Optional;
 
@@ -58,7 +58,7 @@ public class ReminderHandler {
 
         reminderService.deleteReminderById(reminder.getId());
         producerService.produceAnswer(
-                MessageUtils.generateReminderMessage(chatId, task)
+                ReminderUtils.generateReminderMessage(chatId, task)
         );
     }
 }

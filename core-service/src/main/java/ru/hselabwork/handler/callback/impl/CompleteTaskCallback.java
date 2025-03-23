@@ -10,6 +10,7 @@ import ru.hselabwork.model.Task;
 import ru.hselabwork.service.ProducerService;
 import ru.hselabwork.service.TaskService;
 import ru.hselabwork.utils.CallbackUtils;
+import ru.hselabwork.utils.TaskUtils;
 
 import static ru.hselabwork.utils.MessageUtils.*;
 
@@ -53,7 +54,7 @@ public class CompleteTaskCallback implements CallbackProcessor {
             );
 
             producerService.produceAnswer(
-                    generateTaskInfoMessage(task, chatId)
+                    TaskUtils.generateTaskInfoMessage(task, chatId)
             );
         }
     }
