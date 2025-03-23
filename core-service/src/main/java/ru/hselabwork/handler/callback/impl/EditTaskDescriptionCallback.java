@@ -41,7 +41,7 @@ public class EditTaskDescriptionCallback implements CallbackProcessor {
         } else {
             Task task = optionalTask.get();
 
-            userService.changeState(chatId, UserState.AWAITING_FOR_DESCRIPTION);
+            userService.changeState(chatId, UserState.ENTER_DESCRIPTION);
             userService.selectTask(chatId, task.getId());
 
             Integer messageId = callbackQuery.getMessage().getMessageId();

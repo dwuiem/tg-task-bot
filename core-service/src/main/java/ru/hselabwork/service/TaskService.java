@@ -9,6 +9,9 @@ import ru.hselabwork.model.Task;
 import ru.hselabwork.repository.ReminderRepository;
 import ru.hselabwork.repository.TaskRepository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +24,13 @@ public class TaskService {
     public void deleteById(ObjectId taskId) {
         taskRepository.deleteById(taskId);
         reminderRepository.deleteAllByTaskId(taskId);
+    }
+
+    public void deleteAllByDateAndUserId(ObjectId userId, LocalDate date) {
+        LocalDateTime start = LocalDateTime.of(date, LocalTime.MIN);
+        LocalDateTime end = LocalDateTime.of(date, LocalTime.MAX);
+        List<Task> tasks = taskRepository.findAllByUserIdAndDeadlineBetween(userId, start, end);
+        taskRepository.deleteAll(tasks);
     }
 
     public void createTask(Task task) {

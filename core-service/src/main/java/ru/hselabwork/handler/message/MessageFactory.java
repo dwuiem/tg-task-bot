@@ -27,6 +27,7 @@ public class MessageFactory {
     private final TaskDetailsMessage taskDetailsMessage;
     private final EditDescriptionDetailsMessage editDescriptionDetailsMessage;
     private final ReminderDetailsMessage reminderDetailsMessage;
+    private final DeletingDateMessage deletingDateMessage;
 
     private final ProducerService producerService;
     private final UserService userService;
@@ -43,9 +44,10 @@ public class MessageFactory {
                     generateSendMessage(msg.getChatId(), NO_ANSWER_TEXT)
             );
 
-        detailsMessages.put(UserState.AWAITING_FOR_TASK, taskDetailsMessage);
-        detailsMessages.put(UserState.AWAITING_FOR_DESCRIPTION, editDescriptionDetailsMessage);
-        detailsMessages.put(UserState.AWAITING_FOR_REMINDER, reminderDetailsMessage);
+        detailsMessages.put(UserState.ENTER_TASK_DETAILS, taskDetailsMessage);
+        detailsMessages.put(UserState.ENTER_DESCRIPTION, editDescriptionDetailsMessage);
+        detailsMessages.put(UserState.ENTER_REMINDER_DETAILS, reminderDetailsMessage);
+        detailsMessages.put(UserState.ENTER_DELETING_DATE, deletingDateMessage);
 
         commandMessages.put("/start", startCommand);
         commandMessages.put("/list", listCommand);

@@ -23,6 +23,7 @@ public class CallbackQueryFactory {
     private final DeleteTaskCallback deleteTaskCallback;
     private final EditTaskDescriptionCallback editTaskDescriptionCallback;
     private final AddReminderCallback addReminderCallback;
+    private final DeleteTasksByDateCallback deleteTasksByDateCallback;
 
     private final Map<String, CallbackProcessor> callbacks;
 
@@ -42,6 +43,7 @@ public class CallbackQueryFactory {
         callbacks.put("complete_task", completeTaskCallback);
         callbacks.put("edit_description", editTaskDescriptionCallback);
         callbacks.put("add_reminder", addReminderCallback);
+        callbacks.put("delete_tasks_by_date", deleteTasksByDateCallback);
     }
 
     public CallbackProcessor getCallbackProcessor(CallbackQuery callbackQuery) {

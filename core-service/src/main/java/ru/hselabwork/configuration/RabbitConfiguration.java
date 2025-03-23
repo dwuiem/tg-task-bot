@@ -16,7 +16,7 @@ public class RabbitConfiguration {
     @Bean
     public Queue taskReminderQueue() {
         return QueueBuilder.durable("task-reminders")
-                .withArgument("x-dead-letter-exchange", "")  // Указываем, что сообщения с истекшим TTL попадут в другую очередь.
+                .withArgument("x-dead-letter-exchange", "task-exchange")
                 .withArgument("x-dead-letter-routing-key", "expired-reminders")  // Маршрут для просроченных сообщений.
                 .build();
     }

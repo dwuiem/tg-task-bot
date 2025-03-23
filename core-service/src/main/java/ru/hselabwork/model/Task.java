@@ -13,8 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static ru.hselabwork.utils.DateTimeUtils.getCurrentMoscowTime;
-
 @Document(collection = "tasks")
 @Data
 @NoArgsConstructor
@@ -28,7 +26,7 @@ public class Task {
     private String description;
     @Indexed
     private LocalDateTime deadline;
-    private LocalDateTime created = getCurrentMoscowTime();
+    private LocalDateTime created;
     private boolean completed;
     @DBRef // Указываем что с этим документом связаны документы с напоминанием
     private List<Reminder> reminders;

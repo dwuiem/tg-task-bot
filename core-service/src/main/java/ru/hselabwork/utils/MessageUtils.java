@@ -1,12 +1,9 @@
 package ru.hselabwork.utils;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import ru.hselabwork.model.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +41,17 @@ public class MessageUtils {
     public static final String REMINDERS_MESSAGE = "Напоминания ⏰";
     public static final String DELETE_COMPLETED_TASKS_MESSAGE = "Удалить выполненные задачи \uD83D\uDDD1️";
 
-    public static final String REMINDER_BEFORE_NOW = "❗ Время напоминание не может быть раньше чем текущее";
-    public static final String REMINDER_AFTER_DEADLINE = "❗ Время напоминание не может быть раньше чем текущее";
+    public static final String REMINDER_BEFORE_NOW = "❗ Время напоминание не может быть раньше чем текущее. Попробуй заново";
+    public static final String REMINDER_AFTER_DEADLINE = "❗ Время напоминание не может быть после дедлайна. Попробуй заново";
+
+    public static final String ENTER_DELETING_DATE_TEXT =
+            """
+            Напиши <b>дату</b> на которую нужно удалить задачи:
+            <i>[01.01.1111]</i>
+            """;
+
+    public static final String TASKS_DELETED_TEXT = "✅ Задачи и все связанные с ней напоминания успешно <u>удалены</u>";
+    public static final String WRONG_DATE_FORMAT = "❗ Неправильный формат времени. Попробуй заново";
 
     public static SendMessage generateSendMessage(Long chatId, String text) {
         return SendMessage.builder()

@@ -1,15 +1,52 @@
 package ru.hselabwork.utils;
 
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+
+import ru.hselabwork.exception.ReminderParseException;
+
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DateTimeUtils {
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+    private static final Pattern DATETIME_PATTERN = Pattern.compile(
+            "(\\d{2}\\.\\d{2}\\.\\d{4})?" +
+                    "(?:\\s*(\\d{2}:\\d{2}))?"
+    );
+
     public static LocalDateTime getCurrentMoscowTime() {
         ZonedDateTime moscowTime = ZonedDateTime.now(ZoneId.of("Europe/Moscow"));
         return moscowTime.toLocalDateTime();
+    }
+
+    public static LocalDate parseDateFromText(String text) throws DateTimeParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        return LocalDate.parse(text, formatter);
+    }
+
+    public static LocalDateTime parseDateTimeFromText(String text) throws ReminderParseException {
+        Matcher matcher = DATETIME_PATTERN.matcher(text);
+        if (!matcher.matches())
+            throw new ReminderParseException("Invalid message format: " + text);
+
+        String dateStr = matcher.group(1);
+        String timeStr = matcher.group(2);
+
+        if (dateStr == null && timeStr == null) {
+            throw new ReminderParseException("Invalid message format: " + text);
+        }
+        try {
+            LocalDate date = (dateStr != null) ? LocalDate.parse(dateStr, DATE_FORMATTER) : LocalDate.now();
+            LocalTime time = (timeStr != null) ? LocalTime.parse(timeStr, TIME_FORMATTER) : LocalTime.of(23, 59);
+            return LocalDateTime.of(date, time);
+        } catch (DateTimeParseException e) {
+            throw new ReminderParseException("Invalid message format: " + text);
+        }
     }
 
     public static String getTimeRemaining(LocalDateTime now, LocalDateTime deadline) {

@@ -23,7 +23,7 @@ public class AddCommand implements MessageProcessor {
     public void process(Message message) {
         Long chatId = message.getChatId();
 
-        userService.changeState(chatId, UserState.AWAITING_FOR_TASK);
+        userService.changeState(chatId, UserState.ENTER_TASK_DETAILS);
 
         producerService.produceAnswer(
                 generateSendMessage(chatId, ENTER_TASK_TEXT)

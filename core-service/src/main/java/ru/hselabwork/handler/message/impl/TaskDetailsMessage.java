@@ -13,6 +13,7 @@ import ru.hselabwork.service.TaskService;
 import ru.hselabwork.service.UserService;
 import ru.hselabwork.utils.TaskUtils;
 
+import static ru.hselabwork.utils.DateTimeUtils.getCurrentMoscowTime;
 import static ru.hselabwork.utils.MessageUtils.*;
 
 @Component
@@ -30,6 +31,7 @@ public class TaskDetailsMessage implements MessageProcessor {
         try {
             Task task = TaskUtils.parseTaskFromMessage(text);
             task.setUserId(user.getId());
+            task.setCreated(getCurrentMoscowTime());
 
             taskService.createTask(task);
             userService.changeState(user.getChatId(), UserState.NONE_STATE);

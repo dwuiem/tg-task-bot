@@ -71,9 +71,9 @@ public class TaskUtils {
             if (!task.isCompleted()) {
                 LocalDateTime now = getCurrentMoscowTime();
                 if (task.getDeadline().isAfter(now)) {
-                    sb.append(String.format("\n До дедлайна осталось: %s\n\n", DateTimeUtils.getTimeRemaining(now, task.getDeadline())));
+                    sb.append(String.format("\n<i>Осталось: %s</i>\n\n", DateTimeUtils.getTimeRemaining(now, task.getDeadline())));
                 } else {
-                    sb.append("\n <b>⚠ Просрочено!</b>\n\n");
+                    sb.append("\n<b>⚠ Просрочено!</b>\n\n");
                 }
             }
         }
@@ -93,19 +93,20 @@ public class TaskUtils {
 
     public static String getTaskInfo(Task task) {
         StringBuilder sb = new StringBuilder();
-        sb.append(task.getDescription());
+        if (task.isCompleted()) {
+            sb.append("<s>%s</s>".formatted(task.getDescription()));
+        } else {
+            sb.append(task.getDescription());
+        }
         if (task.getDeadline() != null) {
-            sb.append(String.format("\n⏳ <u>%s</u>", TaskUtils.parseDateTime(task.getDeadline())));
+            sb.append(String.format("\n⏳ <b>%s</b>", TaskUtils.parseDateTime(task.getDeadline())));
             if (!task.isCompleted()) {
                 LocalDateTime now = getCurrentMoscowTime();
                 if (task.getDeadline().isAfter(now)) {
-                    sb.append(String.format("\n До дедлайна осталось: %s", DateTimeUtils.getTimeRemaining(now, task.getDeadline())));
+                    sb.append(String.format("\n<i>Осталось: %s</i>", DateTimeUtils.getTimeRemaining(now, task.getDeadline())));
                 } else {
-                    sb.append("\n <b>⚠ Просрочено!</b>");
+                    sb.append("\n<b>⚠ Просрочено!</b>");
                 }
-            }
-            if (!task.getReminders().isEmpty()) {
-                sb.append("\n⏰ - %d".formatted(task.getReminders().size()));
             }
         }
 
@@ -118,11 +119,11 @@ public class TaskUtils {
         StringBuilder sb = new StringBuilder("\uD83D\uDD39 Ваш список задач:\n\n");
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
-            if (task.isCompleted()) {
-                sb.append(String.format("<s>%d. %s</s>\n\n", i + 1, getTaskInfo(task)));
-            } else {
-                sb.append(String.format("%d. %s\n\n", i + 1, getTaskInfo(task)));
+            sb.append(String.format("%d. %s\n", i + 1, getTaskInfo(task)));
+            if (!task.getReminders().isEmpty()) {
+                sb.append("<u>⏰ %d</u>\n".formatted(task.getReminders().size()));
             }
+            sb.append("\n");
         }
         return sb.toString();
     }
@@ -157,7 +158,7 @@ public class TaskUtils {
             rows.add(List.of(deleteDeadline));
         }
 
-        if (task.getDeadline() != null && task.getDeadline().isAfter(getCurrentMoscowTime())) {
+        if (task.getDeadline() != null && task.getDeadline().isBefore(getCurrentMoscowTime())) {
             InlineKeyboardButton extendDeadline = new InlineKeyboardButton("Продлить задачу");
             extendDeadline.setCallbackData("extend_deadline:" + task.getId());
             rows.add(List.of(extendDeadline));
@@ -187,16 +188,27 @@ public class TaskUtils {
 
         // Creating list markup
 
-        List<InlineKeyboardButton> row = new ArrayList<>();
+        List<InlineKeyboardButton> tasksList = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
 
             InlineKeyboardButton button = new InlineKeyboardButton(String.valueOf(i + 1));
             button.setCallbackData("view_task:" + task.getId().toHexString());
 
-            row.add(button);
+            tasksList.add(button);
         }
-        var markup = new InlineKeyboardMarkup(List.of(row));
+
+        InlineKeyboardButton deleteTasksByDate = new InlineKeyboardButton("Удалить задачи на конкретный день");
+        deleteTasksByDate.setCallbackData("delete_tasks_by_date");
+
+        InlineKeyboardButton deleteCompletedTasks = new InlineKeyboardButton("Удалить выполненные задачи");
+        deleteCompletedTasks.setCallbackData("delete_completed_tasks");
+
+        var markup = new InlineKeyboardMarkup(List.of(
+                tasksList,
+                List.of(deleteTasksByDate),
+                List.of(deleteCompletedTasks)
+        ));
 
         return SendMessage.builder()
                 .chatId(chatId)

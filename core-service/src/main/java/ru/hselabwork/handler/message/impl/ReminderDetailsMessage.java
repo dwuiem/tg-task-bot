@@ -14,7 +14,7 @@ import ru.hselabwork.service.ProducerService;
 import ru.hselabwork.service.ReminderService;
 import ru.hselabwork.service.TaskService;
 import ru.hselabwork.service.UserService;
-import ru.hselabwork.utils.ReminderUtils;
+import ru.hselabwork.utils.DateTimeUtils;
 
 import java.time.*;
 import java.util.Optional;
@@ -48,7 +48,7 @@ public class ReminderDetailsMessage implements MessageProcessor {
                 return;
             }
 
-            LocalDateTime reminderTime = ReminderUtils.parseDateTimeFromMessage(text);
+            LocalDateTime reminderTime = DateTimeUtils.parseDateTimeFromText(text);
 
             if (reminderTime.isBefore(getCurrentMoscowTime())) {
                 producerService.produceAnswer(
