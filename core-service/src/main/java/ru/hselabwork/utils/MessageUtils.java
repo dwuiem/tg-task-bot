@@ -25,7 +25,9 @@ public class MessageUtils {
     public static final String TASK_UPDATED_TEXT = "✅ Задача успешно <u>обновлена</u>";
     public static final String TASK_CREATED_TEXT = "✅ Задача успешно <u>создана</u>";
     public static final String REMINDER_CREATED_TEXT = "✅ Напоминание успешно <u>создано</u>";
+    public static final String REMINDER_DELETED_TEXT = "✅ Напоминание успешно <u>удалено</u>";
 
+    public static final String REMINDER_NOT_FOUND_TEXT = "❗Напоминание <u>не найдено</u>. Возможно оно было удалено";
     public static final String TASK_NOT_FOUND_TEXT = "❗ Задача <u>не найдена</u>. Возможно она была удалена";
     public static final String REMINDER_BEFORE_NOW = "❗ Время напоминание не может быть раньше чем текущее. Попробуй заново";
     public static final String REMINDER_AFTER_DEADLINE = "❗ Время напоминание не может быть после дедлайна. Попробуй заново";

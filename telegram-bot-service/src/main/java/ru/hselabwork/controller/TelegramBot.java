@@ -60,6 +60,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         listOfCommands.add(new BotCommand("/start", "Начало"));
         listOfCommands.add(new BotCommand("/list", "Список задач"));
         listOfCommands.add(new BotCommand("/add", "Добавить задачу"));
+        listOfCommands.add(new BotCommand("/list_reminders", "Просмотреть напоминания"));
         try {
             execute(new SetMyCommands(listOfCommands, new BotCommandScopeDefault(), null));
         } catch (TelegramApiException e) {

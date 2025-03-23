@@ -23,6 +23,8 @@ public class MessageFactory {
     private final ListCommand listCommand;
     private final AddCommand addCommand;
     private final StartCommand startCommand;
+    private final ListRemindersCommand listRemindersCommand;
+
 
     private final TaskDetailsMessage taskDetailsMessage;
     private final ReminderDetailsMessage reminderDetailsMessage;
@@ -52,11 +54,14 @@ public class MessageFactory {
         detailsMessages.put(UserState.ENTER_NEW_DEADLINE, editDeadlineDetailsMessage);
 
         commandMessages.put("/start", startCommand);
+
         commandMessages.put("/list", listCommand);
         commandMessages.put("/add", addCommand);
+        commandMessages.put("/list_reminders", listRemindersCommand);
 
         commandMessages.put(MessageUtils.TASKS_LIST_MESSAGE, listCommand);
         commandMessages.put(MessageUtils.ADD_TASK_MESSAGE, addCommand);
+        commandMessages.put(MessageUtils.REMINDERS_MESSAGE, listRemindersCommand);
     }
 
     public MessageProcessor getMessageProcessor(Message message) {

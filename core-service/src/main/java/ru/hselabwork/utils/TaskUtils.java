@@ -158,12 +158,6 @@ public class TaskUtils {
             rows.add(List.of(deleteDeadline));
         }
 
-        if (task.getDeadline() != null && task.getDeadline().isBefore(getCurrentMoscowTime())) {
-            InlineKeyboardButton extendDeadline = new InlineKeyboardButton("Продлить задачу");
-            extendDeadline.setCallbackData("extend_deadline:" + task.getId());
-            rows.add(List.of(extendDeadline));
-        }
-
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup(rows);
 
         return SendMessage.builder()
