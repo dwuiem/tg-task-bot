@@ -40,7 +40,7 @@ public class ConsumerServiceImpl implements ConsumerService {
     }
 
     @Override
-    @RabbitListener(queues = "expired-reminders")
+    @RabbitListener(queues = "reminders")
     public void consumeExpiredReminder(Reminder reminder) {
         log.debug("Received reminder with id: " + reminder.getId());
         reminderHandler.handle(reminder);

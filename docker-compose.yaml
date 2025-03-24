@@ -21,7 +21,7 @@ services:
       - mongodb
 
   rabbitmq:
-    image: rabbitmq:3-management
+    build: .
     container_name: rabbitmq
     restart: no
     ports:
@@ -30,6 +30,10 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: app
       RABBITMQ_DEFAULT_PASS: password
+    command: >
+      sh -c "rabbitmq-plugins enable rabbitmq_management &&
+             rabbitmq-plugins enable rabbitmq_delayed_message_exchange &&
+             rabbitmq-server"
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
 

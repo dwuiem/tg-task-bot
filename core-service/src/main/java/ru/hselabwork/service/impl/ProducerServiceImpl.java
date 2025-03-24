@@ -31,15 +31,19 @@ public class ProducerServiceImpl implements ProducerService {
     @Override
     public void produceReminder(Reminder reminder, long reminderTimeInSeconds) {
         log.debug("Sent reminder");
-        long ttl = reminderTimeInSeconds * 1000L;
+        long delay = reminderTimeInSeconds * 1000L; // преобразуем в миллисекунды
+        log.debug("Delay: " + delay);
+
         rabbitTemplate.convertAndSend(
-                "reminder-exchange",
-                "reminders",
-                reminder,
+                "reminder-exchange", // обменник
+                "routing-key", // ключ маршрутизации
+                reminder, // тело сообщения
                 message -> {
-                    message.getMessageProperties().setExpiration(String.valueOf(ttl));
+                    // Устанавливаем заголовок x-delay для отложенного сообщения
+                    message.getMessageProperties().setHeader("x-delay", delay);
                     return message;
                 }
         );
     }
 }
+

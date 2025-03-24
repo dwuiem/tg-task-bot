@@ -6,8 +6,12 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Configuration
 public class RabbitConfiguration {
+    // Конвертер для сообщений
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
@@ -15,29 +19,21 @@ public class RabbitConfiguration {
 
     @Bean
     public Queue taskReminderQueue() {
-        return QueueBuilder.durable("reminders")
-                .withArgument("x-dead-letter-exchange", "reminder-exchange")
-                .withArgument("x-dead-letter-routing-key", "expired-reminders")
-                .build();
+        return new Queue("reminders", true);
     }
 
     @Bean
-    public Queue expiredReminderQueue() {
-        return new Queue("expired-reminders");
+    public CustomExchange delayedExchange() {
+        Map<String, Object> args = new HashMap<>();
+        args.put("x-delayed-type", "direct");
+        return new CustomExchange("reminder-exchange", "x-delayed-message", true, false, args);
     }
 
     @Bean
-    public DirectExchange exchange() {
-        return new DirectExchange("reminder-exchange");
-    }
-
-    @Bean
-    public Binding taskRemindersBinding(Queue taskReminderQueue, DirectExchange exchange) {
-        return BindingBuilder.bind(taskReminderQueue).to(exchange).with("reminders");
-    }
-
-    @Bean
-    public Binding expiredRemindersBinding(Queue expiredReminderQueue, DirectExchange exchange) {
-        return BindingBuilder.bind(expiredReminderQueue).to(exchange).with("expired-reminders");
+    public Binding taskRemindersBinding() {
+        return BindingBuilder.bind(taskReminderQueue())
+                .to(delayedExchange())
+                .with("routing-key")
+                .noargs();
     }
 }
