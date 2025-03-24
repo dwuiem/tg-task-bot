@@ -6,7 +6,7 @@
 ## Main features
 - **Spring Boot 3.4 (OpenJDK 17)** 
 - **MongoDB (Spring Data MongoDB)** - NoSQL база данных для хранения информации о пользователях, задачах и состояний (ORM взаимодействие)
-- **RabbitMQ (Spring for RabbitMQ)** - Обмен сообщениями между **микросервисами** c гарантированной доставкой при сбоях, создания напоминаний при помощи TTL
+- **RabbitMQ (Spring for RabbitMQ)** - Обмен сообщениями между **микросервисами** c гарантированной доставкой при сбоях, создания напоминаний при помощи плагина `rabbitmq_delayed_message_exchange`
 - **telegrambots API** - Взаимодействие с пользователем посредством интерфейса чат бота
 - **Log4j** - логирование
 - **Lombok** - генерация шаблонного кода с помощью аннотаций
@@ -48,6 +48,7 @@ tg-task-bot/
 │   ├── src/
 │   ├── pom.xml           
 │   └── Dockerfile
+├── Dockerfile # Для RabbitMQ
 ├── docker-compose.yml
 └── .env
 ```
@@ -98,8 +99,7 @@ tg-task-bot/
 - `callback_message` - события callback (нажатия на кнопки)
 - `answer_message` - ответные сообщений из core-service
 - `delete_message` - удаление сообщений
-- `reminders` - напоминания
-- `expired-reminders` - истёкшие напоминания
+- `reminders` - напоминания куда попадают сообщения спустя некоторый delay (не через TTL т.к. RabbitMQ не всегда удаляет сообщения вворемя)
 
 ## Application features
 
